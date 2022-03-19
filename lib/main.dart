@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:lumoz/services/theme_service.dart';
 import 'package:lumoz/ui/home_screen.dart';
+import 'package:lumoz/ui/theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ensure initialize
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -11,16 +17,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-
-      ),
-      darkTheme: ThemeData(
-        primaryColor: Colors.blue
-      ),
-      home: HomeScreen()
+        themeMode: ThemeService().theme,
+        darkTheme: Themes.dark,
+        home: const HomeScreen()
     );
   }
 }
