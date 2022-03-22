@@ -6,6 +6,7 @@ import 'package:lumoz/controllers/reminder_controller.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import '../models/reminder.dart';
 
@@ -21,9 +22,9 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   final TextEditingController _tvShowNameController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
 
-  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedDate = tz.TZDateTime.now(tz.local);
   String _endTime = "10.30 PM";
-  String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
+  String _startTime = DateFormat("hh:mm a").format(tz.TZDateTime.now(tz.local)).toString();
   String _selectedRepeat = "None";
   int _selectedColor = 0;
   List <String> repeatList=[
@@ -249,7 +250,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   _getDate() async{
     DateTime? _pickerDate = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: tz.TZDateTime.now(tz.local),
         firstDate: DateTime(2015),
         lastDate: DateTime(2121));
 
