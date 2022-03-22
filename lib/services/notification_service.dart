@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
+import '../models/reminder.dart';
+import '../ui/view_reminder.dart';
 
 class NotificationHelper{
   FlutterLocalNotificationsPlugin
@@ -10,7 +14,7 @@ class NotificationHelper{
   FlutterLocalNotificationsPlugin();
 
   initializeNotification() async {
-    tz.initializeTimeZones();
+    _configureLocalTimeZone();
     final IOSInitializationSettings initializationSettingsIOS =
     IOSInitializationSettings(
         requestSoundPermission: false,
@@ -46,24 +50,60 @@ class NotificationHelper{
       title,
       body,
       platformChannelSpecifics,
-      payload: 'It could be anything you pass',
+      payload: title,
     );
   }
 
-  scheduledNotification() async {
+  scheduledNotification(int hour, int minute, Reminder reminder) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'scheduled title',
-        'theme changes 5 seconds ago',
-        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        reminder.id!.toInt(),
+        reminder.tvShow,
+        reminder.note,
+        _convertTime(hour, minute),
+        // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
         const NotificationDetails(
             android: AndroidNotificationDetails('your channel id',
                 'your channel name')),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime);
+        UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+      payload: "${reminder.tvShow}|"+"${reminder.note}|"
+    );
 
   }
+
+  tz.TZDateTime _convertTime(int hour, int minute){
+     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+     tz.TZDateTime formattedScheduleDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+     if(formattedScheduleDate.isBefore(now)){
+       formattedScheduleDate.add(const Duration(days: 1));
+     }
+     return formattedScheduleDate;
+  }
+
+  Future <void> _configureLocalTimeZone() async {
+    tz.initializeTimeZones();
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZone));
+
+  }
+
+  Future selectNotification(String? payload) async {
+    if (payload != null) {
+      print('notification payload: $payload');
+    } else {
+      print("Notification Done");
+    }
+
+    if(payload=='Theme Changed'){
+      print('nothing to navigate');
+    }else{
+      Get.to(()=>ViewReminder(label: payload,));
+    }
+
+  }
+
 
   void requestIOSPermissions() {
     flutterLocalNotificationsPlugin
@@ -102,15 +142,6 @@ class NotificationHelper{
     //   ),
     // );
     Get.dialog(Text("Welcome to Lumoz"));
-  }
-
-  Future selectNotification(String? payload) async {
-    if (payload != null) {
-      print('notification payload: $payload');
-    } else {
-      print("Notification Done");
-    }
-    Get.to(()=>Container(color: Colors.white));
   }
 
 }

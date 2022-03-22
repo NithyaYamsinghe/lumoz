@@ -37,4 +37,22 @@ class DatabaseHelper {
     print("create reminder function called");
     return await _database?.insert(_tableName, reminder!.toJson())??1;
   }
+
+  static Future <List<Map<String, dynamic>>> query() async{
+    print("reminder query function called");
+    return await _database!.query(_tableName);
+  }
+    static delete(Reminder reminder) async {
+      return await _database?.delete(_tableName, where: 'id=?', whereArgs: [reminder.id]);
+  }
+
+  static updateReminder(int id) async {
+         return await _database!.rawUpdate(
+             '''
+             UPDATE reminders
+             SET isCompleted = ?
+             WHERE id =?
+             ''', [1, id]
+           );
+  }
  }
