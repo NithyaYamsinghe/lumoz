@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ViewReminder extends StatelessWidget {
+class ViewReminderScreen extends StatelessWidget {
 
   final String? label;
-  const ViewReminder({Key? key, required this.label}) : super(key: key);
+  const ViewReminderScreen({Key? key, required this.label}) : super(key: key);
 
 
   @override

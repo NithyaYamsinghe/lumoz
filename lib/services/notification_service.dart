@@ -6,7 +6,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../models/reminder.dart';
-import '../ui/view_reminder.dart';
+import '../ui/view_reminder_screen.dart';
 
 class NotificationHelper{
   FlutterLocalNotificationsPlugin
@@ -99,7 +99,7 @@ class NotificationHelper{
     if(payload=='Theme Changed'){
       print('nothing to navigate');
     }else{
-      Get.to(()=>ViewReminder(label: payload,));
+      Get.to(()=>ViewReminderScreen(label: payload,));
     }
 
   }
