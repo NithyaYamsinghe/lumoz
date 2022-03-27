@@ -1,25 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lumoz/controllers/tvshow_controller.dart';
-import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:lumoz/models/comment.dart';
+import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
+import 'package:lumoz/controllers/comment_controller.dart';
 
 class AddCommentScreen extends StatefulWidget {
-  const AddCommentScreen({Key? key, required TvShow tvShow}) : super(key: key);
+  final TvShow tvShow;
+  const AddCommentScreen({Key? key, required this.tvShow}) : super(key: key);
 
   @override
   State<AddCommentScreen> createState() => _AddCommentScreenState();
 }
 
 class _AddCommentScreenState extends State<AddCommentScreen> {
-  final TvShowController _tvShowController = Get.put(TvShowController());
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _channelController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
-  final TextEditingController _seasonController = TextEditingController();
+  final CommentController _commentController = Get.put(CommentController());
+  final TextEditingController _commentTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,35 +31,16 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
                   Text("Add New Comment",
                     style: headingStyles,),
                   FormInput(
-                    inputLabel: "TV Show Title",
-                    inputHint: "Enter the tv show title",
-                    controller: _titleController,),
-                  FormInput(
-                    inputLabel: "Channel",
-                    inputHint: "Enter the channel",
-                    controller: _channelController,
-                  ),
-                  FormInput(
-                    inputLabel: "Season",
-                    inputHint: "Enter the season",
-                    controller: _seasonController,
-                  ),
-                  FormInput(
-                    inputLabel: "Description",
-                    inputHint: "Enter the description",
-                    controller: _descriptionController,
-                  ),
-                  FormInput(
-                    inputLabel: "Image URL",
-                    inputHint: "Enter the image url",
-                    controller: _imageController,
-                  ),
+                    inputLabel: "Comment",
+                    inputHint: "add new comment",
+                    controller: _commentTextController,),
+
                   const SizedBox(height: 18,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      MainButton(label: "Add Tv Show", onTap: ()=>_validateFormData())
+                      MainButton(label: "Add Comment", onTap: ()=>_validateFormData(widget.tvShow))
                     ],
                   )
                 ]
@@ -71,14 +50,13 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
     );
   }
 
-  _validateFormData(){
-    if(_titleController.text.isNotEmpty && _descriptionController.text.isNotEmpty){
-
-      _saveFormDataToDB();
+  _validateFormData(TvShow tvShow){
+    if(_commentTextController.text.isNotEmpty){
+      _saveFormDataToDB(tvShow);
       Get.back();
 
     }else if(
-    _titleController.text.isEmpty && _descriptionController.text.isEmpty
+    _commentTextController.text.isEmpty
     ) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
@@ -86,19 +64,14 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
           icon: const Icon(Icons.warning_amber_rounded));
     }}
 
-  _saveFormDataToDB () async {
-    int response =  await  _tvShowController.addTvShow(
-        tvShow: TvShow(
-            channel: _channelController.text,
-            title:_titleController.text,
-            image:_imageController.text,
-            description:_descriptionController.text,
-            season:_seasonController.text,
-            isOngoing:0
+  _saveFormDataToDB (TvShow tvShow) async {
+    int response =  await  _commentController.addComment(
+        comment: Comment(
+            comment: _commentTextController.text,
+            tvShowId:tvShow.id,
+
         )
     );
-    print(_titleController.text);
-    print("id" + "$response");
   }
 
 

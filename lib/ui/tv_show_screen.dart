@@ -9,14 +9,16 @@ import 'package:lumoz/ui/widgets/tv_show_tile.dart';
 import '../models/tv_show.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class ViewTvShowScreen extends StatefulWidget {
-  const ViewTvShowScreen({Key? key}) : super(key: key);
+import 'comment_screen.dart';
+
+class TvShowScreen extends StatefulWidget {
+  const TvShowScreen({Key? key}) : super(key: key);
 
   @override
-  State<ViewTvShowScreen> createState() => _ViewTvShowScreenState();
+  State<TvShowScreen> createState() => _TvShowScreenState();
 }
 
-class _ViewTvShowScreenState extends State<ViewTvShowScreen> {
+class _TvShowScreenState extends State<TvShowScreen> {
   final TvShowController _tvShowController = Get.put(TvShowController());
 
   @override
@@ -72,8 +74,8 @@ class _ViewTvShowScreenState extends State<ViewTvShowScreen> {
     Get.bottomSheet(
         Container(
           padding: const EdgeInsets.only(top: 4),
-          height: tvShow.isOngoing==0? MediaQuery.of(context).size.height*0.45:
-          MediaQuery.of(context).size.height*0.38,
+          height: tvShow.isOngoing==0? MediaQuery.of(context).size.height*0.60:
+          MediaQuery.of(context).size.height*0.45,
           color: Get.isDarkMode?blackColor:Colors.white,
           child: Column(
             children: [
@@ -111,6 +113,18 @@ class _ViewTvShowScreenState extends State<ViewTvShowScreen> {
                   buttonLabel: "Add Comment",
                   onTap: (){
                     Get.to(()=>AddCommentScreen(tvShow: tvShow,));
+                  },
+                  color: greyColor,
+                  isClosed: true,
+                  context:context
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _bottomOptionsButton(
+                  buttonLabel: "View Comments",
+                  onTap: (){
+                    Get.to(()=>CommentScreen(tvShow: tvShow,));
                   },
                   color: greyColor,
                   isClosed: true,

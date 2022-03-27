@@ -1,3 +1,4 @@
+import 'package:lumoz/models/comment.dart';
 import 'package:lumoz/models/reminder.dart';
 import 'package:lumoz/models/tv_show.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,7 +15,7 @@ class DatabaseHelper {
       return;
     }
     try {
-      String _path = await getDatabasesPath() + 'lumoz2.db';
+      String _path = await getDatabasesPath() + 'lumoz3.db';
       _database = await openDatabase(
           _path,
           version: _version,
@@ -35,7 +36,11 @@ class DatabaseHelper {
                   "color INTEGER, "
                   "isCompleted INTEGER)",
             );
-
+            db.execute(
+              "CREATE TABLE $_tableNameComment("
+                  "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                  "comment TEXT, tvShowId INTEGER)",
+            );
           }
       );
     } catch (e) {
@@ -90,6 +95,30 @@ class DatabaseHelper {
              SET isOngoing = ?
              WHERE id =?
              ''', [1, id]
+    );
+  }
+
+  static Future <int> createComment(Comment? comment) async {
+    print("create comment function called");
+    return await _database?.insert(_tableNameComment, comment!.toJson()) ?? 1;
+  }
+
+  static Future <List<Map<String, dynamic>>> queryComments() async {
+    print("comment query function called");
+    return await _database!.query(_tableNameComment);
+  }
+
+  static deleteComment(Comment comment) async{
+    return await _database?.delete(_tableNameComment, where: 'id=?', whereArgs: [comment.id]);
+  }
+
+  static updateComment(int id, String comment) async{
+    return await _database!.rawUpdate(
+        '''
+             UPDATE comments
+             SET comment = ?
+             WHERE id =?
+             ''', [comment, id]
     );
   }
 
