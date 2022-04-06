@@ -34,13 +34,13 @@ class User{
   Map<String, dynamic> toJson(){
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = id;
-    data['comment'] = userName;
-    data['tvShowId'] = firstName;
-    data['comment'] = lastName;
-    data['tvShowId'] = email;
-    data['comment'] = password;
-    data['tvShowId'] = mobile;
-    data['comment'] = age;
+    data['userName'] = userName;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['password'] = password;
+    data['mobile'] = mobile;
+    data['age'] = age;
     return data;
   }
 
