@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lumoz/controllers/tvshow_controller.dart';
-import 'package:lumoz/ui/add_comment_screen.dart';
-import 'package:lumoz/ui/add_tv_show_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/widgets/home_tile.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
-import 'package:lumoz/ui/widgets/tv_show_tile.dart';
-import '../models/tv_show.dart';
+import '../controllers/home_controller.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'comment_screen.dart';
+import '../models/home.dart';
+import 'add_home_screen.dart';
 
-class TvShowScreen extends StatefulWidget {
-  const TvShowScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<TvShowScreen> createState() => _TvShowScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _TvShowScreenState extends State<TvShowScreen> {
-  final TvShowController _tvShowController = Get.put(TvShowController());
+class _HomeScreenState extends State<HomeScreen> {
+  final HomeController _homeController = Get.put(HomeController());
 
   @override
   void initState() {
     super.initState();
-    _tvShowController.getTvShows();
+    _homeController.getHomes();
   }
 
   @override
@@ -32,49 +30,48 @@ class _TvShowScreenState extends State<TvShowScreen> {
       appBar: _appBar(context),
       body: Column(
         children:[
-          _addTvShowBar(),
+          _addChannelBar(),
           SizedBox(height: 10,),
-          _showTvShows()
+          _showChannels()
         ],
       ),
     );
   }
 
-  _showTvShows(){
+  _showChannels(){
     return Expanded(
       child: Obx((){
         return ListView.builder(
-            itemCount: _tvShowController.tvShowList.length,
+            itemCount: _homeController.homeList.length,
             itemBuilder: (_, index){
-              TvShow tvShow = _tvShowController.tvShowList[index];
-              print(tvShow.toJson());
-                return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                _showBottomOptions(context, tvShow);
-                              },
-                              child: TvShowTile(tvShow),
-                            )
-                          ],
-                        ),
+              Home home = _homeController.homeList[index];
+              print(home.toJson());
+              return AnimationConfiguration.staggeredList(
+                  position: index,
+                  child: SlideAnimation(
+                    child: FadeInAnimation(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              _showBottomOptions(context, home);
+                            },
+                            child: HomeTile(home),
+                          )
+                        ],
                       ),
-                    ));
+                    ),
+                  ));
             });
       }),
     );
   }
 
-  _showBottomOptions(BuildContext context, TvShow tvShow){
+  _showBottomOptions(BuildContext context, Home home){
     Get.bottomSheet(
         Container(
           padding: const EdgeInsets.only(top: 4),
-          height: tvShow.isOngoing==0? MediaQuery.of(context).size.height*0.60:
-          MediaQuery.of(context).size.height*0.45,
+          height: MediaQuery.of(context).size.height*0.45,
           color: Get.isDarkMode?blackColor:Colors.white,
           child: Column(
             children: [
@@ -87,19 +84,10 @@ class _TvShowScreenState extends State<TvShowScreen> {
                 ),
               ),
               const Spacer(),
-              tvShow.isOngoing==1? Container():_bottomOptionsButton(
-                  buttonLabel: "TvShow Completed",
-                  onTap: (){
-                    _tvShowController.updateTvShow(tvShow.id!);
-                    Get.back();
-                  },
-                  color: primaryClr,
-                  context:context
-              ),
               _bottomOptionsButton(
-                  buttonLabel: "Delete TvShow",
+                  buttonLabel: "Delete Tab Information",
                   onTap: (){
-                    _tvShowController.deleteTvShow(tvShow);
+                    _homeController.deleteHome(home);
                     Get.back();
                   },
                   color: Colors.red[300]!,
@@ -109,21 +97,9 @@ class _TvShowScreenState extends State<TvShowScreen> {
                 height: 10,
               ),
               _bottomOptionsButton(
-                  buttonLabel: "Add Comment",
+                  buttonLabel: "Update Tab Information",
                   onTap: (){
-                    Get.to(()=>AddCommentScreen(tvShow: tvShow,));
-                  },
-                  color: greyColor,
-                  isClosed: true,
-                  context:context
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "View Comments",
-                  onTap: (){
-                    Get.to(()=>CommentScreen(tvShow: tvShow,));
+                    // Get.to(()=>AddCommentScreen(channel: channel,));
                   },
                   color: greyColor,
                   isClosed: true,
@@ -183,7 +159,7 @@ class _TvShowScreenState extends State<TvShowScreen> {
     );
   }
 
-  _addTvShowBar(){
+  _addChannelBar(){
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -197,9 +173,9 @@ class _TvShowScreenState extends State<TvShowScreen> {
               ],
             ),
           ),
-          MainButton(label: "Add New Tv Show", onTap: () async {
-            await Get.to(() => const AddTvShowScreen());
-            _tvShowController.getTvShows();
+          MainButton(label: "Add New Home Tab", onTap: () async {
+            await Get.to(() => const AddHomeScreen());
+            _homeController.getHomes();
           })
         ],
       ),

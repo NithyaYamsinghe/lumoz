@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/database/database_helper.dart';
 
-
 class TvShowController extends GetxController{
   @override
   void onReady(){
@@ -10,6 +9,8 @@ class TvShowController extends GetxController{
   }
 
   var tvShowList = <TvShow>[].obs;
+  var selectedTvShowList = <TvShow>[].obs;
+
 
   // add new tv show and save in database
   Future <int> addTvShow({TvShow? tvShow}) async{
@@ -19,6 +20,12 @@ class TvShowController extends GetxController{
   // get all tv shows from database
   void getTvShows() async{
     List <Map<String, dynamic>> tvShows = await DatabaseHelper.queryTvShow();
+    tvShowList.assignAll(tvShows.map((data) => TvShow.fromJson(data)).toList());
+  }
+
+  // get channel specific tv shows from database
+  void getSelectedTvShows(String channel) async{
+    List <Map<String, dynamic>> tvShows = await DatabaseHelper.querySelectedTvShow(channel);
     tvShowList.assignAll(tvShows.map((data) => TvShow.fromJson(data)).toList());
   }
 
