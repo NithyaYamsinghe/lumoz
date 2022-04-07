@@ -28,4 +28,9 @@ class UserManagementController extends GetxController{
     await DatabaseHelper.updateUserManagement(id, text);
     getUserManagements();
   }
+
+  void updateUserManagementRecord(UserManagement userManagement) async {
+    await DatabaseHelper.updateUserManagementRecord(userManagement);
+   getUserManagements();
+  }
 }

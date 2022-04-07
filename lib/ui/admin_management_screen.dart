@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/controllers/admin_management_controller.dart';
 import 'package:lumoz/ui/add_admin_management_screen.dart';
+import 'package:lumoz/ui/update_admin_management_screen.dart';
 import 'package:lumoz/ui/widgets/admin_management_tile.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
@@ -100,10 +101,9 @@ class _AdminManagementScreenState extends State<AdminManagementScreen> {
               _bottomOptionsButton(
                   buttonLabel: "Update Tab Information",
                   onTap: (){
-                    // Get.to(()=>AddCommentScreen(channel: channel,));
+                    Get.to(()=>UpdateAdminManagementScreen(adminManagement: adminManagement,));
                   },
-                  color: greyColor,
-                  isClosed: true,
+                  color: Colors.green,
                   context:context
               ),
               const SizedBox(

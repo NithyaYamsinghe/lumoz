@@ -4,6 +4,7 @@ import 'package:lumoz/controllers/user_management_controller.dart';
 import 'package:lumoz/models/user_management.dart';
 import 'package:lumoz/ui/add_user_management_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/update_user_management_screen.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/ui/widgets/user_management_tile.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -100,10 +101,9 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
               _bottomOptionsButton(
                   buttonLabel: "Update Tab Information",
                   onTap: (){
-                    // Get.to(()=>AddCommentScreen(channel: channel,));
+                    Get.to(()=>UpdateUserManagementScreen(userManagement: userManagement,));
                   },
-                  color: greyColor,
-                  isClosed: true,
+                  color: Colors.green,
                   context:context
               ),
               const SizedBox(

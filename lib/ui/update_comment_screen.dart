@@ -1,24 +1,26 @@
 import 'package:get/get.dart';
-import 'package:lumoz/ui/home_user_management_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:lumoz/models/comment.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
-import 'package:lumoz/controllers/user_controller.dart';
+import 'package:lumoz/controllers/comment_controller.dart';
 
-class LoginUserScreen extends StatefulWidget {
-  const LoginUserScreen({Key? key}) : super(key: key);
+class UpdateCommentScreen extends StatefulWidget {
+  final Comment comment;
+  const UpdateCommentScreen({Key? key, required this.comment}) : super(key: key);
+
   @override
-  State<LoginUserScreen> createState() => _LoginUserScreenState();
+  State<UpdateCommentScreen> createState() => _UpdateCommentScreenState();
 }
 
-class _LoginUserScreenState extends State<LoginUserScreen> {
-  final UserController _userController = Get.put(UserController());
-  final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController  _passwordTextController = TextEditingController();
+class _UpdateCommentScreenState extends State<UpdateCommentScreen> {
+  final CommentController _commentController = Get.put(CommentController());
+   TextEditingController _commentTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    _commentTextController = TextEditingController(text: widget.comment.comment);
     return Scaffold(
       appBar: _appBar(context),
       body: Container(
@@ -26,25 +28,19 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
         child: SingleChildScrollView(
             child: Column(
                 children:[
-                  Text("User Sign In",
+                  Text("Update Comment",
                     style: headingStyles,),
                   FormInput(
-                    inputLabel: "Email",
-                    inputHint: "email",
-                    controller: _emailTextController,),
-                  FormInput(
-                    inputLabel: "Password",
-                    inputHint: "password",
-                    controller: _passwordTextController,),
+                    inputLabel: "Comment",
+                    inputHint: "update new comment",
+                    controller: _commentTextController,),
+
                   const SizedBox(height: 18,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      MainButton(label: "Sign In", onTap: (){
-                        _validateFormData();
-                      }
-                      )
+                      MainButton(label: "Update Comment", onTap: ()=>_validateFormData())
                     ],
                   )
                 ]
@@ -55,13 +51,12 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
   }
 
   _validateFormData(){
-    if( _emailTextController.text.isNotEmpty && _passwordTextController.text.isNotEmpty){
-      _userController.getUser(_emailTextController.text);
-      if(_userController.selectedUserList.isNotEmpty){
-        const email = "nithya@gmail.com";
-        Get.to(()=> const HomeUserManagementScreen(email:email));
-      }}else if(
-          _emailTextController.text.isEmpty &&  _passwordTextController.text.isEmpty
+    if(_commentTextController.text.isNotEmpty){
+      _saveFormDataToDB();
+      Get.back();
+
+    }else if(
+    _commentTextController.text.isEmpty
     ) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
@@ -69,7 +64,16 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
           icon: const Icon(Icons.warning_amber_rounded));
     }}
 
-    _appBar(BuildContext context) {
+  _saveFormDataToDB ()  {
+   _commentController.updateCommentRecord( Comment(
+       id: widget.comment.id,
+       comment:_commentTextController.text,
+       tvShowId: widget.comment.tvShowId
+   ));
+  }
+
+
+  _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,

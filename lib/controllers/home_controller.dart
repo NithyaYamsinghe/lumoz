@@ -28,4 +28,9 @@ class HomeController extends GetxController{
     await DatabaseHelper.updateHome(id, text);
     getHomes();
   }
+
+  void updateHomeRecord(Home home) async {
+    await DatabaseHelper.updateHomeRecord(home);
+    getHomes();
+  }
 }

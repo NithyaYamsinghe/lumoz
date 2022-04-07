@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/models/admin_management.dart';
+import 'package:lumoz/ui/add_admin_management_screen.dart';
+import 'package:lumoz/ui/add_channel_screen.dart';
+import 'package:lumoz/ui/add_home_screen.dart';
+import 'package:lumoz/ui/add_tv_show_screen.dart';
+import 'package:lumoz/ui/add_user_management_screen.dart';
+import 'package:lumoz/ui/add_user_screen.dart';
+import 'package:lumoz/ui/admin_management_screen.dart';
+import 'package:lumoz/ui/channel_screen.dart';
+import 'package:lumoz/ui/home_screen.dart';
+import 'package:lumoz/ui/tv_show_screen.dart';
+import 'package:lumoz/ui/user_management_screen.dart';
+import 'package:lumoz/ui/user_screen.dart';
 import 'package:lumoz/ui/widgets/admin_management_tile.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-
 import '../controllers/admin_management_controller.dart';
 
 class HomeAdminManagementScreen extends StatefulWidget {
@@ -51,12 +62,24 @@ class _HomeAdminManagementScreenState extends State<HomeAdminManagementScreen> {
                         children: [
                           GestureDetector(
                               onTap: (){
-                                // if(userManagement.text == '')
-                                // {
-                                //   // Get.to(()=>HomeTvShowScreen());
-                                // }
-                                // // else;
-                                // // Get.to(()=>HomeTvShowScreen());
+                               if(adminManagement.text == 'Profile Tab Management'){
+                                 Get.to(()=>const HomeScreen());
+                               }
+                               else if(adminManagement.text == 'Admin Tab Management'){
+                                 Get.to(()=>const AdminManagementScreen());
+                               }
+                               else if( adminManagement.text == 'User Tab Management'){
+                                 Get.to(()=> const UserManagementScreen());
+                               }
+                               else if( adminManagement.text == 'User Management'){
+                                 Get.to(()=>const UserScreen());
+                               }
+                               else if( adminManagement.text == 'Tv Show Management'){
+                                 Get.to(()=>const TvShowScreen());
+                               }
+                               else if( adminManagement.text == 'Channel Management'){
+                                 Get.to(()=>const ChannelScreen());
+                               }
                               },
                               child: AdminManagementTile(adminManagement)
                           )

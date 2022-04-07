@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lumoz/ui/create_user_profile_screen.dart';
 import 'package:lumoz/ui/widgets/home_tile.dart';
 import '../controllers/home_controller.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../models/home.dart';
-import 'home_admin_management_screen.dart';
-import 'home_user_management_screen.dart';
+import '../services/notification_service.dart';
+import '../services/theme_service.dart';
 
 class HomeManagementScreen extends StatefulWidget {
-  const HomeManagementScreen({Key? key}) : super(key: key);
+  final String? email;
+  const HomeManagementScreen({Key? key, this.email}) : super(key: key);
 
   @override
   State<HomeManagementScreen> createState() => _HomeManagementScreenState();
@@ -16,10 +18,14 @@ class HomeManagementScreen extends StatefulWidget {
 
 class _HomeManagementScreenState extends State<HomeManagementScreen> {
   final HomeController _homeController = Get.put(HomeController());
+  var notificationHelper;
 
   @override
   void initState() {
     super.initState();
+    notificationHelper=NotificationHelper();
+    notificationHelper.initializeNotification();
+    notificationHelper.requestIOSPermissions();
     _homeController.getHomes();
   }
 
@@ -52,12 +58,12 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
                         children: [
                           GestureDetector(
                             onTap: (){
-                              if(home.text == 'Admin')
+                              if(home.text == 'Create User Profile')
                               {
-                                Get.to(()=>HomeAdminManagementScreen());
+                                Get.to(()=>CreateUserProfileScreen(email:widget.email));
                               }
-                              else{
-                                Get.to(()=>HomeUserManagementScreen());
+                              else if (home.text == "View User Profile"){
+                                // Get.to(()=>HomeUserManagementScreen());
                               }
                             },
                             child: HomeTile(home),
@@ -77,9 +83,14 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap:(){
-          Get.back();
+          ThemeService().switchTheme();
+          notificationHelper.displayNotification(
+              title: "Theme Changed",
+              body: Get.isDarkMode? "Activated Lumoz Light Theme": "Activated Lumoz Dark Theme"
+          );
+          //notificationHelper.scheduledNotification();
         },
-        child: Icon(Icons.arrow_back_ios_new_outlined,
+        child: Icon(Get.isDarkMode? Icons.wb_sunny: Icons.nightlight_round,
             size: 20,
             color: Get.isDarkMode? Colors.white : Colors.black),
       ),

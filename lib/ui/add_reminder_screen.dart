@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lumoz/controllers/reminder_controller.dart';
+import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:timezone/timezone.dart' as tz;
-
 import '../models/reminder.dart';
 
 class AddReminderScreen extends StatefulWidget {
-  const AddReminderScreen({Key? key}) : super(key: key);
+  final TvShow tvShow;
+  const AddReminderScreen({Key? key, required this.tvShow}) : super(key: key);
 
   @override
   State<AddReminderScreen> createState() => _AddReminderScreenState();
@@ -19,8 +20,15 @@ class AddReminderScreen extends StatefulWidget {
 
 class _AddReminderScreenState extends State<AddReminderScreen> {
   final ReminderController _reminderController = Get.put(ReminderController());
-  final TextEditingController _tvShowNameController = TextEditingController();
+  TextEditingController _tvShowNameController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+  }
 
   DateTime _selectedDate = tz.TZDateTime.now(tz.local);
   String _endTime = "10.30 PM";
@@ -42,8 +50,8 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+     _tvShowNameController = TextEditingController(text: widget.tvShow.title);
     return Scaffold(
-      // backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(context),
       body: Container(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 30),

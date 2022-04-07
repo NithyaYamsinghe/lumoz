@@ -20,6 +20,12 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
   final TextEditingController _commentTextController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
@@ -65,7 +71,7 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
     }}
 
   _saveFormDataToDB (TvShow tvShow) async {
-    int response =  await  _commentController.addComment(
+    await  _commentController.addComment(
         comment: Comment(
             comment: _commentTextController.text,
             tvShowId:tvShow.id,

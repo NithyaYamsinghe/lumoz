@@ -1,18 +1,19 @@
+import 'package:lumoz/ui/home_admin_management_screen.dart';
+import 'package:lumoz/ui/home_management_screen.dart';
 import 'package:get/get.dart';
-import 'package:lumoz/ui/home_user_management_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/controllers/user_controller.dart';
 
-class LoginUserScreen extends StatefulWidget {
-  const LoginUserScreen({Key? key}) : super(key: key);
+class LoginAdminUserScreen extends StatefulWidget {
+  const LoginAdminUserScreen({Key? key}) : super(key: key);
   @override
-  State<LoginUserScreen> createState() => _LoginUserScreenState();
+  State<LoginAdminUserScreen> createState() => _LoginAdminUserScreenState();
 }
 
-class _LoginUserScreenState extends State<LoginUserScreen> {
+class _LoginAdminUserScreenState extends State<LoginAdminUserScreen> {
   final UserController _userController = Get.put(UserController());
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController  _passwordTextController = TextEditingController();
@@ -26,7 +27,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
         child: SingleChildScrollView(
             child: Column(
                 children:[
-                  Text("User Sign In",
+                  Text("Administrator Sign In",
                     style: headingStyles,),
                   FormInput(
                     inputLabel: "Email",
@@ -58,10 +59,17 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
     if( _emailTextController.text.isNotEmpty && _passwordTextController.text.isNotEmpty){
       _userController.getUser(_emailTextController.text);
       if(_userController.selectedUserList.isNotEmpty){
-        const email = "nithya@gmail.com";
-        Get.to(()=> const HomeUserManagementScreen(email:email));
+        Get.to(()=> const HomeAdminManagementScreen());
+        // }else if (_userController.selectedUserList.isEmpty){
+        //   (
+        //     Get.snackbar("Error", "Incorrect Email or Password", colorText: Colors.red,
+        //         snackPosition: SnackPosition.BOTTOM,
+        //         backgroundColor: Colors.white,
+        //         icon: const Icon(Icons.warning_amber_rounded, color: Colors.red,))
+        //
+        // );
       }}else if(
-          _emailTextController.text.isEmpty &&  _passwordTextController.text.isEmpty
+    _emailTextController.text.isEmpty &&  _passwordTextController.text.isEmpty
     ) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
@@ -69,7 +77,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
           icon: const Icon(Icons.warning_amber_rounded));
     }}
 
-    _appBar(BuildContext context) {
+  _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,

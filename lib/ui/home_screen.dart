@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/update_home_screen.dart';
 import 'package:lumoz/ui/widgets/home_tile.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import '../controllers/home_controller.dart';
@@ -99,10 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
               _bottomOptionsButton(
                   buttonLabel: "Update Tab Information",
                   onTap: (){
-                    // Get.to(()=>AddCommentScreen(channel: channel,));
+                    Get.to(()=>UpdateHomeScreen(home: home,));
                   },
-                  color: greyColor,
-                  isClosed: true,
+                  color: Colors.green,
                   context:context
               ),
               const SizedBox(

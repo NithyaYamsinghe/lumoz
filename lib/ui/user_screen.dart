@@ -6,7 +6,6 @@ import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lumoz/ui/widgets/user_title.dart';
-
 import '../models/user.dart';
 
 class UserScreen extends StatefulWidget {

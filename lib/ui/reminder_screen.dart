@@ -6,10 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lumoz/models/reminder.dart';
 import 'package:lumoz/services/notification_service.dart';
-import 'package:lumoz/services/theme_service.dart';
-import 'package:lumoz/ui/add_reminder_screen.dart';
 import 'package:lumoz/ui/theme.dart';
-import 'package:lumoz/ui/widgets/main_button.dart';
+import 'package:lumoz/ui/view_reminder_screen.dart';
 import 'package:lumoz/ui/widgets/reminder_tile.dart';
 import 'package:timezone/timezone.dart' as tz;
 import '../controllers/reminder_controller.dart';
@@ -113,8 +111,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.only(top: 4),
-        height: reminder.isCompleted==1? MediaQuery.of(context).size.height*0.32:
-        MediaQuery.of(context).size.height*0.36,
+        height: reminder.isCompleted==1? MediaQuery.of(context).size.height*0.60:
+        MediaQuery.of(context).size.height*0.60,
         color: Get.isDarkMode?blackColor:Colors.white,
         child: Column(
           children: [
@@ -143,6 +141,18 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   Get.back();
                 },
                 color: Colors.red[300]!,
+                context:context
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            _bottomOptionsButton(
+                buttonLabel: "View Reminder",
+                onTap: (){
+                  Get.to(()=>ViewReminderScreen(label: "${reminder.tvShow}|"+"${reminder.note}|" + "${reminder.isCompleted}|"+ "${reminder.date}|"+"${reminder.endTime}|"
+                      + "${reminder.startTime}|"+ "${reminder.color}|"+ "${reminder.repeat}|"+"${reminder.reminder}"));
+                },
+                color: Colors.green,
                 context:context
             ),
             const SizedBox(
@@ -251,10 +261,10 @@ class _ReminderScreenState extends State<ReminderScreen> {
               ],
             ),
           ),
-          MainButton(label: "Add Reminder", onTap: () async {
-           await Get.to(() => const AddReminderScreen());
-            _reminderController.getReminders();
-          })
+          // MainButton(label: "Add Reminder", onTap: () async {
+          //  await Get.to(() => AddReminderScreen(tvShow: ""));
+          //   _reminderController.getReminders();
+          // })
         ],
       ),
     );
@@ -266,16 +276,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap:(){
-           ThemeService().switchTheme();
-           notificationHelper.displayNotification(
-             title: "Theme Changed",
-             body: Get.isDarkMode? "Activated Lumoz Light Theme": "Activated Lumoz Dark Theme"
-           );
-           //notificationHelper.scheduledNotification();
+          Get.back();
         },
-        child: Icon(Get.isDarkMode? Icons.wb_sunny: Icons.nightlight_round,
-          size: 20,
-        color: Get.isDarkMode? Colors.white : Colors.black),
+        child: Icon(Icons.arrow_back_ios_new_outlined,
+            size: 20,
+            color: Get.isDarkMode? Colors.white : Colors.black),
       ),
       actions: const [
         CircleAvatar(

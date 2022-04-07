@@ -7,6 +7,9 @@ class TvShow{
   String? description;
   String? season;
   int? isOngoing;
+  String? date;
+  String? startTime;
+  String? endTime;
 
  TvShow({
     this.id,
@@ -15,7 +18,10 @@ class TvShow{
     this.image,
     this.description,
     this.season,
-    this.isOngoing
+    this.isOngoing,
+   this.date,
+    this.startTime,
+   this.endTime,
   });
 
   TvShow.fromJson(Map<String, dynamic> json){
@@ -26,6 +32,9 @@ class TvShow{
     description = json['description'];
     season = json['season'];
     isOngoing = json['isOngoing'];
+    date = json['date'];
+    startTime = json['startTime'];
+    endTime = json['endTime'];
 
   }
 
@@ -38,6 +47,9 @@ class TvShow{
     data['description']=description;
     data['season']= season;
     data['isOngoing']= isOngoing;
+    data['date']= this.date;
+    data['startTime']= this.startTime;
+    data['endTime']=this.endTime;
     return data;
   }
 

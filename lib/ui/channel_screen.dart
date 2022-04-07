@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lumoz/controllers/channel_controller.dart';
 import 'package:lumoz/ui/add_channel_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/update_channel_screen.dart';
 import 'package:lumoz/ui/widgets/channel_tile.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import '../models/channel.dart';
@@ -99,10 +100,9 @@ class _ChannelScreenState extends State<ChannelScreen> {
               _bottomOptionsButton(
                   buttonLabel: "Update Channel",
                   onTap: (){
-                    // Get.to(()=>AddCommentScreen(channel: channel,));
+                    Get.to(()=>UpdateChannelScreen(channel: channel,));
                   },
-                  color: greyColor,
-                  isClosed: true,
+                  color: Colors.green,
                   context:context
               ),
               const SizedBox(
