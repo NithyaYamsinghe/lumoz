@@ -4,13 +4,16 @@ import 'package:get_storage/get_storage.dart';
 import 'package:lumoz/database/database_helper.dart';
 import 'package:lumoz/models/channel.dart';
 import 'package:lumoz/services/theme_service.dart';
+import 'package:lumoz/ui/add_home_screen.dart';
 import 'package:lumoz/ui/add_user_screen.dart';
 import 'package:lumoz/ui/admin_management_screen.dart';
 import 'package:lumoz/ui/channel_screen.dart';
+import 'package:lumoz/ui/home_admin_management_screen.dart';
 import 'package:lumoz/ui/home_channel_screen.dart';
 import 'package:lumoz/ui/home_management_screen.dart';
 import 'package:lumoz/ui/home_screen.dart';
 import 'package:lumoz/ui/login_user_screen.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/tv_show_screen.dart';
 import 'package:lumoz/ui/user_management_screen.dart';
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
         themeMode: ThemeService().theme,
         darkTheme: Themes.dark,
-        home: const AddUserScreen()
+        home: const SplashScreen()
     );
   }
 }

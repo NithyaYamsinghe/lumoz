@@ -1,21 +1,25 @@
+import 'package:lumoz/ui/login_admin_user_screen.dart';
+import 'package:lumoz/ui/login_user_screen.dart';
+import '../models/user.dart';
 import 'package:get/get.dart';
-import 'package:lumoz/ui/home_user_management_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/controllers/user_controller.dart';
 
-class LoginUserScreen extends StatefulWidget {
-  const LoginUserScreen({Key? key}) : super(key: key);
+class AddAdminUserScreen extends StatefulWidget {
+  const AddAdminUserScreen({Key? key}) : super(key: key);
   @override
-  State<LoginUserScreen> createState() => _LoginUserScreenState();
+  State<AddAdminUserScreen> createState() => _AddAdminUserScreenState();
 }
 
-class _LoginUserScreenState extends State<LoginUserScreen> {
+class _AddAdminUserScreenState extends State<AddAdminUserScreen> {
   final UserController _userController = Get.put(UserController());
+  final TextEditingController _userNameTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController  _passwordTextController = TextEditingController();
+  final TextEditingController  _confirmPasswordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +30,12 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
         child: SingleChildScrollView(
             child: Column(
                 children:[
-                  Text("User Sign In",
+                  Text("Sign Up",
                     style: headingStyles,),
+                  FormInput(
+                    inputLabel: "User Name",
+                    inputHint: "user name",
+                    controller: _userNameTextController,),
                   FormInput(
                     inputLabel: "Email",
                     inputHint: "email",
@@ -36,15 +44,23 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
                     inputLabel: "Password",
                     inputHint: "password",
                     controller: _passwordTextController,),
+                  FormInput(
+                    inputLabel: "Confirm Password",
+                    inputHint: "confirm password",
+                    controller: _confirmPasswordTextController,),
                   const SizedBox(height: 18,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      MainButton(label: "Sign In", onTap: (){
+                      MainButton(label: "Create New Account", onTap: (){
                         _validateFormData();
                       }
-                      )
+                      ),
+                      MainButton(label: "Sign In", onTap: (){
+                        Get.to(()=>const LoginAdminUserScreen());
+                      }
+                      ),
                     ],
                   )
                 ]
@@ -55,13 +71,12 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
   }
 
   _validateFormData(){
-    if( _emailTextController.text.isNotEmpty && _passwordTextController.text.isNotEmpty){
-      _userController.getUser(_emailTextController.text);
-      if(_userController.selectedUserList.isNotEmpty){
-        const email = "nithya@gmail.com";
-        Get.to(()=> const HomeUserManagementScreen(email:email));
-      }}else if(
-          _emailTextController.text.isEmpty &&  _passwordTextController.text.isEmpty
+    if(_userNameTextController.text.isNotEmpty && _emailTextController.text.isNotEmpty && _passwordTextController.text.isNotEmpty && _confirmPasswordTextController.text.isNotEmpty){
+      _saveFormDataToDB();
+      Get.back();
+
+    }else if(
+    _userNameTextController.text.isEmpty || _emailTextController.text.isEmpty || _passwordTextController.text.isEmpty || _confirmPasswordTextController.text.isEmpty
     ) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
@@ -69,7 +84,24 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
           icon: const Icon(Icons.warning_amber_rounded));
     }}
 
-    _appBar(BuildContext context) {
+  _saveFormDataToDB () async {
+    await  _userController.addUser(
+        user: User(
+          userName: _userNameTextController.text,
+          firstName: "",
+          lastName: "",
+          mobile: "",
+          age:"",
+          email:_emailTextController.text,
+          password:_passwordTextController.text,
+        )
+
+    );
+    Get.to(()=>const LoginUserScreen());
+  }
+
+
+  _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,

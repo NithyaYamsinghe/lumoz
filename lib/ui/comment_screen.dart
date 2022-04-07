@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/ui/add_comment_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/update_comment_screen.dart';
 import 'package:lumoz/ui/widgets/comment_tile.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import '../controllers/comment_controller.dart';
@@ -23,7 +24,8 @@ class _CommentScreenState extends State<CommentScreen> {
   @override
   void initState() {
     super.initState();
-    _commentController.getComments();
+    WidgetsFlutterBinding.ensureInitialized();
+    _commentController.getSelectedComments(widget.tvShow.id!);
   }
 
   @override
@@ -44,9 +46,9 @@ class _CommentScreenState extends State<CommentScreen> {
     return Expanded(
       child: Obx((){
         return ListView.builder(
-            itemCount: _commentController.commentList.length,
+            itemCount: _commentController.selectedCommentList.length,
             itemBuilder: (_, index){
-              Comment comment = _commentController.commentList[index];
+              Comment comment = _commentController.selectedCommentList[index];
               print(comment.toJson());
               return AnimationConfiguration.staggeredList(
                   position: index,
@@ -101,10 +103,9 @@ class _CommentScreenState extends State<CommentScreen> {
               _bottomOptionsButton(
                   buttonLabel: "Update Comment",
                   onTap: (){
-                    // Get.to(()=>AddCommentScreen(tvShow: tvShow,));
+                    Get.to(()=>UpdateCommentScreen(comment: comment));
                   },
-                  color: greyColor,
-                  isClosed: true,
+                  color: Colors.green,
                   context:context
               ),
               const SizedBox(
@@ -177,7 +178,7 @@ class _CommentScreenState extends State<CommentScreen> {
           ),
           MainButton(label: "Add New Comment", onTap: () async {
             await Get.to(() => AddCommentScreen(tvShow: widget.tvShow ));
-            _commentController.getComments();
+            _commentController.getSelectedComments(widget.tvShow.id!);
           })
         ],
       ),

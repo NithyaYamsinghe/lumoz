@@ -4,11 +4,11 @@ import 'package:lumoz/controllers/tvshow_controller.dart';
 import 'package:lumoz/ui/add_comment_screen.dart';
 import 'package:lumoz/ui/add_tv_show_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/update_tv_show_screen.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/ui/widgets/tv_show_tile.dart';
 import '../models/tv_show.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'comment_screen.dart';
 
 class TvShowScreen extends StatefulWidget {
   const TvShowScreen({Key? key}) : super(key: key);
@@ -73,8 +73,8 @@ class _TvShowScreenState extends State<TvShowScreen> {
     Get.bottomSheet(
         Container(
           padding: const EdgeInsets.only(top: 4),
-          height: tvShow.isOngoing==0? MediaQuery.of(context).size.height*0.60:
-          MediaQuery.of(context).size.height*0.45,
+          height: tvShow.isOngoing==0? MediaQuery.of(context).size.height*1.0:
+          MediaQuery.of(context).size.height*0.90,
           color: Get.isDarkMode?blackColor:Colors.white,
           child: Column(
             children: [
@@ -109,24 +109,22 @@ class _TvShowScreenState extends State<TvShowScreen> {
                 height: 10,
               ),
               _bottomOptionsButton(
-                  buttonLabel: "Add Comment",
+                  buttonLabel: "Update TvShow",
                   onTap: (){
-                    Get.to(()=>AddCommentScreen(tvShow: tvShow,));
+                    Get.to(()=>UpdateTvShowScreen(tvShow: tvShow,));
                   },
                   color: greyColor,
-                  isClosed: true,
                   context:context
               ),
               const SizedBox(
                 height: 10,
               ),
               _bottomOptionsButton(
-                  buttonLabel: "View Comments",
+                  buttonLabel: "Add Comment",
                   onTap: (){
-                    Get.to(()=>CommentScreen(tvShow: tvShow,));
+                    Get.to(()=>AddCommentScreen(tvShow: tvShow,));
                   },
-                  color: greyColor,
-                  isClosed: true,
+                  color: Colors.green,
                   context:context
               ),
               const SizedBox(

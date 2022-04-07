@@ -70,7 +70,7 @@ class _HomeChannelScreenState extends State<HomeChannelScreen> {
     Get.bottomSheet(
         Container(
           padding: const EdgeInsets.only(top: 4),
-          height: MediaQuery.of(context).size.height*0.45,
+          height: MediaQuery.of(context).size.height*0.30,
           color: Get.isDarkMode?blackColor:Colors.white,
           child: Column(
             children: [

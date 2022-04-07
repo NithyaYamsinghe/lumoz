@@ -9,20 +9,21 @@ import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-class AddTvShowScreen extends StatefulWidget {
-  const AddTvShowScreen({Key? key}) : super(key: key);
+class UpdateTvShowScreen extends StatefulWidget {
+  final TvShow tvShow;
+  const UpdateTvShowScreen({Key? key, required this.tvShow}) : super(key: key);
 
   @override
-  State<AddTvShowScreen> createState() => _AddTvShowScreenState();
+  State<UpdateTvShowScreen> createState() => _UpdateTvShowScreenState();
 }
 
-class _AddTvShowScreenState extends State<AddTvShowScreen> {
+class _UpdateTvShowScreenState extends State<UpdateTvShowScreen> {
   final TvShowController _tvShowController = Get.put(TvShowController());
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _channelController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
-  final TextEditingController _seasonController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _channelController = TextEditingController();
+  TextEditingController _imageController = TextEditingController();
+  TextEditingController _seasonController = TextEditingController();
 
   @override
   void initState() {
@@ -30,12 +31,17 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
     WidgetsFlutterBinding.ensureInitialized();
   }
 
-   DateTime _selectedDate = tz.TZDateTime.now(tz.local);
-   String _endTime = "10.30 PM";
-   String _startTime = DateFormat("hh:mm a").format(tz.TZDateTime.now(tz.local)).toString();
+  DateTime _selectedDate = tz.TZDateTime.now(tz.local);
+  String _endTime = "10.30 PM";
+  String _startTime = DateFormat("hh:mm a").format(tz.TZDateTime.now(tz.local)).toString();
 
   @override
   Widget build(BuildContext context) {
+    _titleController = TextEditingController(text: widget.tvShow.title);
+    _descriptionController = TextEditingController(text: widget.tvShow.description);
+    _channelController = TextEditingController(text: widget.tvShow.channel);
+    _imageController = TextEditingController(text: widget.tvShow.image);
+    _seasonController = TextEditingController(text: widget.tvShow.season);
     return Scaffold(
       appBar: _appBar(context),
       body: Container(
@@ -43,7 +49,7 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
         child: SingleChildScrollView(
             child: Column(
                 children:[
-                  Text("Add Tv Show",
+                  Text("Update Tv Show",
                     style: headingStyles,),
                   FormInput(
                     inputLabel: "TV Show Title",
@@ -83,7 +89,7 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
                       Expanded(
                         child: FormInput(
                           inputLabel: "Start Time",
-                          inputHint: _startTime,
+                          inputHint: widget.tvShow.startTime!,
                           widget: IconButton(
                             onPressed: (){
                               _getTime(isStartTime: true);
@@ -97,7 +103,7 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
                       SizedBox(width: 12,),
                       Expanded(
                         child: FormInput(
-                          inputHint: _endTime,
+                          inputHint: widget.tvShow.endTime!,
                           inputLabel: "End Time",
                           widget: IconButton(
                             onPressed: (){
@@ -116,7 +122,7 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      MainButton(label: "Add Tv Show", onTap: ()=>_validateFormData())
+                      MainButton(label: "Update Tv Show", onTap: ()=>_validateFormData())
                     ],
                   )
                 ]
@@ -142,19 +148,18 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
     }}
 
   _saveFormDataToDB () async {
-    int response =  await  _tvShowController.addTvShow(
-        tvShow: TvShow(
-            channel: _channelController.text,
-            title:_titleController.text,
-            image:_imageController.text,
-            description:_descriptionController.text,
-            season:_seasonController.text,
-            isOngoing:0,
-            date: DateFormat.yMd().format(_selectedDate),
-           startTime:_startTime,
-           endTime:_endTime,
-        )
-    );
+    _tvShowController.updateTvShowRecord( TvShow(
+      id: widget.tvShow.id,
+      channel: _channelController.text,
+      image:_imageController.text,
+      title:_titleController.text,
+      description:_descriptionController.text,
+      season:_seasonController.text,
+      isOngoing: widget.tvShow.isOngoing,
+      date: DateFormat.yMd().format(_selectedDate),
+      startTime:_startTime,
+      endTime:_endTime,
+    ));
   }
 
 
@@ -228,5 +233,9 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
     );
   }
 }
+
+
+
+
 
 

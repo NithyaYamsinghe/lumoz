@@ -28,4 +28,9 @@ class AdminManagementController extends GetxController{
     await DatabaseHelper.updateAdminManagement(id, text);
     getAdminManagements();
   }
+
+  void updateAdminManagementRecord(AdminManagement adminManagement) async {
+    await DatabaseHelper.updateAdminManagementRecord(adminManagement);
+    getAdminManagements();
+  }
 }

@@ -4,6 +4,7 @@ import 'package:lumoz/models/home.dart';
 import 'package:lumoz/models/reminder.dart';
 import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/models/user.dart';
+import 'package:lumoz/models/wishlist.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/admin_management.dart';
@@ -20,13 +21,14 @@ class DatabaseHelper {
   static final String _tableNameHome =  "homes";
   static final String _tableNameAdminManagement =  "adminManagements";
   static final String _tableNameUserManagement =  "userManagements";
+  static final String _tableNameWishlist = "wishlist";
 
   static Future<void> initDatabase() async {
     if (_database != null) {
       return;
     }
     try {
-      String _path = await getDatabasesPath() + 'lumoz6.db';
+      String _path = await getDatabasesPath() + 'lumoz8.db';
       _database = await openDatabase(
           _path,
           version: _version,
@@ -35,8 +37,9 @@ class DatabaseHelper {
               "CREATE TABLE $_tableNameTvShow("
                   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                   "channel STRING, title STRING, image STRING, "
+                  "startTime STRING, endTime STRING, "
                   "description TEXT, season String, "
-                  "isOngoing INTEGER)",
+                  "date STRING, isOngoing INTEGER)",
             );
             db.execute(
               "CREATE TABLE $_tableName("
@@ -83,6 +86,12 @@ class DatabaseHelper {
                   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                   "text STRING, image STRING, "
                   "link STRING)",
+            );
+            db.execute(
+              "CREATE TABLE $_tableNameWishlist("
+                  "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                  "name STRING, episodeCount STRING, tvChanel STRING, "
+                  "description STRING )",
             );
           }
       );
@@ -146,6 +155,11 @@ class DatabaseHelper {
     );
   }
 
+  static updateTvShowRecord(TvShow tvShow) async {
+    await _database?.update(_tableNameTvShow, tvShow.toJson(),
+        where: "id = ?", whereArgs: [tvShow.id]);
+  }
+
   static Future <int> createComment(Comment? comment) async {
     print("create comment function called");
     return await _database?.insert(_tableNameComment, comment!.toJson()) ?? 1;
@@ -154,6 +168,13 @@ class DatabaseHelper {
   static Future <List<Map<String, dynamic>>> queryComments() async {
     print("comment query function called");
     return await _database!.query(_tableNameComment);
+  }
+
+  static Future <List<Map<String, dynamic>>> querySelectedComments(int tvShowId) async {
+    return await _database!.query(
+        _tableNameComment,
+        where: 'tvShowId = ?', whereArgs: [tvShowId]
+    );
   }
 
   static deleteComment(Comment comment) async{
@@ -168,6 +189,11 @@ class DatabaseHelper {
              WHERE id =?
              ''', [comment, id]
     );
+  }
+
+  static updateCommentRecord(Comment comment) async {
+    await _database?.update(_tableNameComment, comment.toJson(),
+        where: "id = ?", whereArgs: [comment.id]);
   }
 
   static Future <int> createUser(User? user) async {
@@ -199,6 +225,11 @@ class DatabaseHelper {
     );
   }
 
+  static updateUserRecord(User user) async {
+    await _database?.update(_tableNameUser, user.toJson(),
+        where: "email = ?", whereArgs: [user.email]);
+  }
+
   static Future <int> createChannel(Channel? channel) async {
     return await _database?.insert(_tableNameChannel, channel!.toJson()) ?? 1;
   }
@@ -221,6 +252,12 @@ class DatabaseHelper {
     );
   }
 
+  static updateChannelRecord(Channel channel) async {
+    await _database?.update(_tableNameChannel, channel.toJson(),
+        where: "id = ?", whereArgs: [channel.id]);
+  }
+
+
   static Future <int> createHome(Home? home) async {
     return await _database?.insert(_tableNameHome, home!.toJson()) ?? 1;
   }
@@ -241,6 +278,11 @@ class DatabaseHelper {
              WHERE id =?
              ''', [text, id]
     );
+  }
+
+  static updateHomeRecord(Home home) async {
+    await _database?.update(_tableNameHome, home.toJson(),
+        where: "id = ?", whereArgs: [home.id]);
   }
 
   static Future <int> createAdminManagement(AdminManagement? adminManagement) async {
@@ -265,6 +307,11 @@ class DatabaseHelper {
     );
   }
 
+  static updateAdminManagementRecord(AdminManagement adminManagement) async {
+    await _database?.update(_tableNameAdminManagement, adminManagement.toJson(),
+        where: "id = ?", whereArgs: [adminManagement.id]);
+  }
+
   static Future <int> createUserManagement(UserManagement? userManagement) async {
     return await _database?.insert(_tableNameUserManagement, userManagement!.toJson()) ?? 1;
   }
@@ -286,4 +333,30 @@ class DatabaseHelper {
              ''', [text, id]
     );
   }
+
+  static updateUserManagementRecord(UserManagement userManagement) async {
+    await _database?.update(_tableNameUserManagement, userManagement.toJson(),
+        where: "id = ?", whereArgs: [userManagement.id]);
+  }
+
+  //Create
+  static Future <int> createWishlist(Wishlist? wishlist) async {
+    print("create wishlist function called");
+    return await _database?.insert(_tableNameWishlist, wishlist!.toJson()) ?? 1;
+  }
+  //View
+  static Future <List<Map<String, dynamic>>> queryWishlist() async {
+    print("wishlist query function called");
+    return await _database!.query(_tableNameWishlist);
+  }
+  //Delete
+  static deleteWishlist(Wishlist wishlist) async {
+    return await _database?.delete(
+        _tableNameWishlist, where: 'id=?', whereArgs: [wishlist.id]);
+  }
+  //Update
+  static updateWishlist(Wishlist wishlist) async {
+    return await _database?.update(_tableNameWishlist, wishlist.toJson(), where: 'id=?', whereArgs: [wishlist.id]);
+  }
+
 }

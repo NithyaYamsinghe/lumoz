@@ -9,6 +9,7 @@ class CommentController extends GetxController{
   }
 
   var commentList = <Comment>[].obs;
+  var selectedCommentList = <Comment>[].obs;
 
   // add new comment and save in database
   Future <int> addComment({Comment? comment}) async{
@@ -21,16 +22,24 @@ class CommentController extends GetxController{
     commentList.assignAll(comments.map((data) => new Comment.fromJson(data)).toList());
   }
 
+  void getSelectedComments(int tvShowId) async{
+    List <Map<String, dynamic>> comments = await DatabaseHelper.querySelectedComments(tvShowId);
+    selectedCommentList.assignAll(comments.map((data) => new Comment.fromJson(data)).toList());
+  }
+
   // delete a comment from database
   void deleteComment(Comment comment){
-    var response = DatabaseHelper.deleteComment(comment);
-    getComments();
-    print(response);
+    DatabaseHelper.deleteComment(comment);
+    getSelectedComments(comment.tvShowId!);
   }
 
   // update comment based on id on database
   void updateComment(int id, String comment) async {
     await DatabaseHelper.updateComment(id, comment);
-    getComments();
+  }
+
+  void updateCommentRecord(Comment comment) async {
+    await DatabaseHelper.updateCommentRecord(comment);
+    getSelectedComments(comment.tvShowId!);
   }
 }

@@ -26,7 +26,7 @@ class TvShowController extends GetxController{
   // get channel specific tv shows from database
   void getSelectedTvShows(String channel) async{
     List <Map<String, dynamic>> tvShows = await DatabaseHelper.querySelectedTvShow(channel);
-    tvShowList.assignAll(tvShows.map((data) => TvShow.fromJson(data)).toList());
+    selectedTvShowList.assignAll(tvShows.map((data) => TvShow.fromJson(data)).toList());
   }
 
   // delete a tv show from database
@@ -39,6 +39,12 @@ class TvShowController extends GetxController{
   // update tv show completed status on database
   void updateTvShow(int id) async {
     await DatabaseHelper.updateTvShow(id);
+    getTvShows();
+  }
+
+  // update tv show  on database
+  void updateTvShowRecord(TvShow tvShow) async {
+    await DatabaseHelper.updateTvShowRecord(tvShow);
     getTvShows();
   }
 }

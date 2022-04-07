@@ -20,6 +20,7 @@ class UserController extends GetxController{
   void getUsers() async{
     List <Map<String, dynamic>> users = await DatabaseHelper.queryUsers();
     userList.assignAll(users.map((data) => new User.fromJson(data)).toList());
+    print(userList);
   }
 
   // get specific user from database
@@ -40,5 +41,10 @@ class UserController extends GetxController{
   void updateUser(int id, String password) async {
     await DatabaseHelper.updateUser(id, password);
     getUsers();
+  }
+
+  void updateUserRecord(User user) async {
+    await DatabaseHelper.updateUserRecord(user);
+    getUser(user.email!);
   }
 }

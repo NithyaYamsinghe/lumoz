@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/controllers/user_management_controller.dart';
 import 'package:lumoz/models/user_management.dart';
-import 'package:lumoz/ui/home_admin_management_screen.dart';
+import 'package:lumoz/ui/home_channel_screen.dart';
+import 'package:lumoz/ui/home_management_screen.dart';
+import 'package:lumoz/ui/reminder_screen.dart';
 import 'package:lumoz/ui/widgets/user_management_tile.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:lumoz/ui/wishlist_screen.dart';
 
 class HomeUserManagementScreen extends StatefulWidget {
-  const HomeUserManagementScreen({Key? key}) : super(key: key);
+  final String? email;
+  const HomeUserManagementScreen({Key? key, this.email}) : super(key: key);
 
   @override
   State<HomeUserManagementScreen> createState() => _HomeUserManagementScreenState();
@@ -19,6 +23,7 @@ class _HomeUserManagementScreenState extends State<HomeUserManagementScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
     _userManagementController.getUserManagements();
   }
 
@@ -51,13 +56,19 @@ class _HomeUserManagementScreenState extends State<HomeUserManagementScreen> {
                         children: [
                           GestureDetector(
                             onTap: (){
-                              // if(userManagement.text == 'Admin')
-                              // {
-                              //   Get.to(()=>HomeAdminManagementScreen());
-                              // }
-                              // else{
-                              //   Get.to(()=>HomeUserManagementScreen());
-                              // }
+                              if(userManagement.text == 'Wish List')
+                              {
+                                Get.to(()=>WishlistScreen());
+                              }
+                              else if (userManagement.text == 'Channels'){
+                                Get.to(()=> HomeChannelScreen());
+                              }
+                              else if (userManagement.text == 'Reminders'){
+                                Get.to(()=> ReminderScreen());
+                              }
+                              else if (userManagement.text == 'Profile'){
+                                Get.to(()=> HomeManagementScreen(email:widget.email!));
+                              }
                             },
                             child: UserManagementTile(userManagement)
                           )

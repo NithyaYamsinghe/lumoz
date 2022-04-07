@@ -7,7 +7,7 @@ class User{
   String? email;
   String? password;
   String? mobile;
-  int? age;
+  String? age;
 
   User({
     this.id,

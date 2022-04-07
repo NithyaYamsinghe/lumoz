@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lumoz/models/comment.dart';
-
 import '../../models/user.dart';
 
 class UserTile extends StatelessWidget {

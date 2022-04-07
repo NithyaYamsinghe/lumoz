@@ -28,9 +28,9 @@ class ChannelController extends GetxController{
     print(response);
   }
 
-  // update channel completed status on database
-  void updateChannel(int id, String description) async {
-    await DatabaseHelper.updateChannel(id, description);
+  // update channel on database
+  void updateChannelRecord(Channel channel) async {
+    await DatabaseHelper.updateChannelRecord(channel);
     getChannels();
   }
 }

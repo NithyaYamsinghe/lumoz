@@ -68,7 +68,8 @@ class NotificationHelper{
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
-      payload: "${reminder.tvShow}|"+"${reminder.note}|"
+      payload: "${reminder.tvShow}|"+"${reminder.note}|" + "${reminder.isCompleted}|"+ "${reminder.date}|"+"${reminder.endTime}|"
+        + "${reminder.startTime}|"+ "${reminder.color}|"+ "${reminder.repeat}|"+"${reminder.reminder}"
     );
 
   }
@@ -101,7 +102,6 @@ class NotificationHelper{
     }else{
       Get.to(()=>ViewReminderScreen(label: payload,));
     }
-
   }
 
 

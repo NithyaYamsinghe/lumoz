@@ -1,5 +1,4 @@
 import 'package:lumoz/ui/login_user_screen.dart';
-import 'package:lumoz/ui/user_screen.dart';
 import '../models/user.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/ui/theme.dart';
@@ -56,7 +55,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       MainButton(label: "Create New Account", onTap: (){
                         _validateFormData();
                       }
-                        )],
+                        ),
+                      MainButton(label: "Sign In", onTap: (){
+                        Get.to(()=>const LoginUserScreen());
+                      }
+                      ),
+                    ],
     )
     ]
     )
@@ -86,7 +90,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
           firstName: "",
           lastName: "",
           mobile: "",
-          age:0,
+          age:"",
           email:_emailTextController.text,
           password:_passwordTextController.text,
         )
