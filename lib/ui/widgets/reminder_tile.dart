@@ -5,21 +5,20 @@ import '../../models/reminder.dart';
 
 class ReminderTile extends StatelessWidget {
   final Reminder? reminder;
+
   ReminderTile(this.reminder);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(bottom: 12),
       child: Container(
         padding: const EdgeInsets.all(16),
-        //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: _getBGClr(reminder?.color??0),
+          color: _getBGClr(reminder?.color ?? 0),
         ),
         child: Row(children: [
           Expanded(
@@ -27,7 +26,7 @@ class ReminderTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  reminder?.tvShow??"",
+                  reminder?.tvShow ?? "",
                   style: GoogleFonts.raleway(
                     textStyle: const TextStyle(
                         fontSize: 16,
@@ -51,14 +50,14 @@ class ReminderTile extends StatelessWidget {
                       "${reminder!.startTime} - ${reminder!.endTime}",
                       style: GoogleFonts.raleway(
                         textStyle:
-                        TextStyle(fontSize: 13, color: Colors.grey[100]),
+                            TextStyle(fontSize: 13, color: Colors.grey[100]),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  reminder?.note??"",
+                  reminder?.note ?? "",
                   style: GoogleFonts.raleway(
                     textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
                   ),

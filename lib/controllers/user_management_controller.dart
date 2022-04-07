@@ -2,24 +2,27 @@ import 'package:get/get.dart';
 import 'package:lumoz/database/database_helper.dart';
 import '../models/user_management.dart';
 
-class UserManagementController extends GetxController{
+class UserManagementController extends GetxController {
   @override
-  void onReady(){
+  void onReady() {
     super.onReady();
   }
 
   var userManagementList = <UserManagement>[].obs;
 
-  Future <int> addUserManagement({UserManagement? userManagement}) async{
+  Future<int> addUserManagement({UserManagement? userManagement}) async {
     return await DatabaseHelper.createUserManagement(userManagement);
   }
 
-  void getUserManagements() async{
-    List <Map<String, dynamic>> userManagements = await DatabaseHelper.queryUserManagements();
-    userManagementList.assignAll(userManagements.map((data) => new UserManagement.fromJson(data)).toList());
+  void getUserManagements() async {
+    List<Map<String, dynamic>> userManagements =
+        await DatabaseHelper.queryUserManagements();
+    userManagementList.assignAll(userManagements
+        .map((data) => new UserManagement.fromJson(data))
+        .toList());
   }
 
-  void deleteUserManagement(UserManagement userManagement){
+  void deleteUserManagement(UserManagement userManagement) {
     DatabaseHelper.deleteUserManagement(userManagement);
     getUserManagements();
   }
@@ -31,6 +34,6 @@ class UserManagementController extends GetxController{
 
   void updateUserManagementRecord(UserManagement userManagement) async {
     await DatabaseHelper.updateUserManagementRecord(userManagement);
-   getUserManagements();
+    getUserManagements();
   }
 }

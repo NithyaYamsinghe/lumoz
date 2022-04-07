@@ -11,14 +11,17 @@ import 'package:lumoz/ui/wishlist_screen.dart';
 
 class HomeUserManagementScreen extends StatefulWidget {
   final String? email;
+
   const HomeUserManagementScreen({Key? key, this.email}) : super(key: key);
 
   @override
-  State<HomeUserManagementScreen> createState() => _HomeUserManagementScreenState();
+  State<HomeUserManagementScreen> createState() =>
+      _HomeUserManagementScreenState();
 }
 
 class _HomeUserManagementScreenState extends State<HomeUserManagementScreen> {
-  final UserManagementController _userManagementController = Get.put(UserManagementController());
+  final UserManagementController _userManagementController =
+      Get.put(UserManagementController());
 
   @override
   void initState() {
@@ -32,21 +35,24 @@ class _HomeUserManagementScreenState extends State<HomeUserManagementScreen> {
     return Scaffold(
       appBar: _appBar(context),
       body: Column(
-        children:[
-          SizedBox(height: 10,),
+        children: [
+          SizedBox(
+            height: 10,
+          ),
           _showChannels()
         ],
       ),
     );
   }
 
-  _showChannels(){
+  _showChannels() {
     return Expanded(
-      child: Obx((){
+      child: Obx(() {
         return ListView.builder(
             itemCount: _userManagementController.userManagementList.length,
-            itemBuilder: (_, index){
-              UserManagement userManagement = _userManagementController.userManagementList[index];
+            itemBuilder: (_, index) {
+              UserManagement userManagement =
+                  _userManagementController.userManagementList[index];
               print(userManagement.toJson());
               return AnimationConfiguration.staggeredList(
                   position: index,
@@ -55,23 +61,19 @@ class _HomeUserManagementScreenState extends State<HomeUserManagementScreen> {
                       child: Row(
                         children: [
                           GestureDetector(
-                            onTap: (){
-                              if(userManagement.text == 'Wish List')
-                              {
-                                Get.to(()=>WishlistScreen());
-                              }
-                              else if (userManagement.text == 'Channels'){
-                                Get.to(()=> HomeChannelScreen());
-                              }
-                              else if (userManagement.text == 'Reminders'){
-                                Get.to(()=> ReminderScreen());
-                              }
-                              else if (userManagement.text == 'Profile'){
-                                Get.to(()=> HomeManagementScreen(email:widget.email!));
-                              }
-                            },
-                            child: UserManagementTile(userManagement)
-                          )
+                              onTap: () {
+                                if (userManagement.text == 'Wish List') {
+                                  Get.to(() => WishlistScreen());
+                                } else if (userManagement.text == 'Channels') {
+                                  Get.to(() => HomeChannelScreen());
+                                } else if (userManagement.text == 'Reminders') {
+                                  Get.to(() => ReminderScreen());
+                                } else if (userManagement.text == 'Profile') {
+                                  Get.to(() => HomeManagementScreen(
+                                      email: widget.email!));
+                                }
+                              },
+                              child: UserManagementTile(userManagement))
                         ],
                       ),
                     ),
@@ -86,22 +88,20 @@ class _HomeUserManagementScreenState extends State<HomeUserManagementScreen> {
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
-        onTap:(){
+        onTap: () {
           Get.back();
         },
         child: Icon(Icons.arrow_back_ios_new_outlined,
-            size: 20,
-            color: Get.isDarkMode? Colors.white : Colors.black),
+            size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions: const [
         CircleAvatar(
-          backgroundImage: AssetImage(
-              "images/profile.jpg"
-          ),
+          backgroundImage: AssetImage("images/profile.jpg"),
         ),
-        SizedBox(width: 20,)
+        SizedBox(
+          width: 20,
+        )
       ],
     );
   }
 }
-

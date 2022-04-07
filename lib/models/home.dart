@@ -1,5 +1,4 @@
-class Home{
-
+class Home {
   int? id;
   String? text;
   String? image;
@@ -12,18 +11,19 @@ class Home{
     this.link,
   });
 
-  Home.fromJson(Map<String, dynamic> json){
+  Home.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     text = json['text'];
     image = json['image'];
     link = json['link'];
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = id;
-    data['text']= text;
+    data['text'] = text;
     data['image'] = image;
-    data['link']= link;
+    data['link'] = link;
     return data;
-  }}
+  }
+}

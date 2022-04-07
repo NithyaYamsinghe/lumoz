@@ -1,5 +1,4 @@
-class TvShow{
-
+class TvShow {
   int? id;
   String? channel;
   String? title;
@@ -11,7 +10,7 @@ class TvShow{
   String? startTime;
   String? endTime;
 
- TvShow({
+  TvShow({
     this.id,
     this.channel,
     this.title,
@@ -19,12 +18,12 @@ class TvShow{
     this.description,
     this.season,
     this.isOngoing,
-   this.date,
+    this.date,
     this.startTime,
-   this.endTime,
+    this.endTime,
   });
 
-  TvShow.fromJson(Map<String, dynamic> json){
+  TvShow.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     channel = json['channel'];
     title = json['title'];
@@ -35,22 +34,20 @@ class TvShow{
     date = json['date'];
     startTime = json['startTime'];
     endTime = json['endTime'];
-
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = id;
     data['title'] = title;
-    data['channel']= channel;
+    data['channel'] = channel;
     data['image'] = image;
-    data['description']=description;
-    data['season']= season;
-    data['isOngoing']= isOngoing;
-    data['date']= this.date;
-    data['startTime']= this.startTime;
-    data['endTime']=this.endTime;
+    data['description'] = description;
+    data['season'] = season;
+    data['isOngoing'] = isOngoing;
+    data['date'] = this.date;
+    data['startTime'] = this.startTime;
+    data['endTime'] = this.endTime;
     return data;
   }
-
 }

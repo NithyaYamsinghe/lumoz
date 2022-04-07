@@ -7,32 +7,29 @@ import 'package:timezone/timezone.dart' as tz;
 import '../models/reminder.dart';
 import '../ui/view_reminder_screen.dart';
 
-class NotificationHelper{
-  FlutterLocalNotificationsPlugin
-  flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+class NotificationHelper {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   initializeNotification() async {
     _configureLocalTimeZone();
     final IOSInitializationSettings initializationSettingsIOS =
-    IOSInitializationSettings(
-        requestSoundPermission: false,
-        requestBadgePermission: false,
-        requestAlertPermission: false,
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification
-    );
+        IOSInitializationSettings(
+            requestSoundPermission: false,
+            requestBadgePermission: false,
+            requestAlertPermission: false,
+            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
 
     final AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings("appicon");
+        AndroidInitializationSettings("appicon");
 
     final InitializationSettings initializationSettings =
-      InitializationSettings(
+        InitializationSettings(
       iOS: initializationSettingsIOS,
-      android:initializationSettingsAndroid,
+      android: initializationSettingsAndroid,
     );
 
-    await flutterLocalNotificationsPlugin.initialize(
-        initializationSettings,
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
   }
 
@@ -43,7 +40,8 @@ class NotificationHelper{
         importance: Importance.max, priority: Priority.high);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
-        android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
       0,
       title,
@@ -61,32 +59,37 @@ class NotificationHelper{
         _convertTime(hour, minute),
         // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
         const NotificationDetails(
-            android: AndroidNotificationDetails('your channel id',
-                'your channel name')),
+            android: AndroidNotificationDetails(
+                'your channel id', 'your channel name')),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-      payload: "${reminder.tvShow}|"+"${reminder.note}|" + "${reminder.isCompleted}|"+ "${reminder.date}|"+"${reminder.endTime}|"
-        + "${reminder.startTime}|"+ "${reminder.color}|"+ "${reminder.repeat}|"+"${reminder.reminder}"
-    );
-
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+        payload: "${reminder.tvShow}|" +
+            "${reminder.note}|" +
+            "${reminder.isCompleted}|" +
+            "${reminder.date}|" +
+            "${reminder.endTime}|" +
+            "${reminder.startTime}|" +
+            "${reminder.color}|" +
+            "${reminder.repeat}|" +
+            "${reminder.reminder}");
   }
 
-  tz.TZDateTime _convertTime(int hour, int minute){
-     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-     tz.TZDateTime formattedScheduleDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
-     if(formattedScheduleDate.isBefore(now)){
-       formattedScheduleDate.add(const Duration(days: 1));
-     }
-     return formattedScheduleDate;
+  tz.TZDateTime _convertTime(int hour, int minute) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime formattedScheduleDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+    if (formattedScheduleDate.isBefore(now)) {
+      formattedScheduleDate.add(const Duration(days: 1));
+    }
+    return formattedScheduleDate;
   }
 
-  Future <void> _configureLocalTimeZone() async {
+  Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZone));
-
   }
 
   Future selectNotification(String? payload) async {
@@ -96,23 +99,24 @@ class NotificationHelper{
       print("Notification Done");
     }
 
-    if(payload=='Theme Changed'){
+    if (payload == 'Theme Changed') {
       print('nothing to navigate');
-    }else{
-      Get.to(()=>ViewReminderScreen(label: payload,));
+    } else {
+      Get.to(() => ViewReminderScreen(
+            label: payload,
+          ));
     }
   }
-
 
   void requestIOSPermissions() {
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>()
+            IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   Future onDidReceiveLocalNotification(
@@ -142,5 +146,4 @@ class NotificationHelper{
     // );
     Get.dialog(Text("Welcome to Lumoz"));
   }
-
 }
