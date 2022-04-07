@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lumoz/ui/theme.dart';
+
 class ViewReminderScreen extends StatefulWidget {
   final String? label;
+
   const ViewReminderScreen({Key? key, required this.label}) : super(key: key);
 
   @override
@@ -13,8 +15,7 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       height: 10,
       margin: const EdgeInsets.only(bottom: 12),
@@ -24,18 +25,16 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
           //  width: SizeConfig.screenWidth * 0.78,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: _getBGClr(int. parse(widget.label.toString().split("|")[6])),
+            color: _getBGClr(int.parse(widget.label.toString().split("|")[6])),
           ),
-          child: Row
-            (children: [
-
+          child: Row(children: [
             Expanded(
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: Text( widget.label.toString().split("|")[0],
+                    child: Text(
+                      widget.label.toString().split("|")[0],
                       style: GoogleFonts.raleway(
                         textStyle: const TextStyle(
                             fontSize: 16,
@@ -60,8 +59,8 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
                         child: Text(
                           widget.label.toString().split("|")[3],
                           style: GoogleFonts.raleway(
-                            textStyle:
-                            TextStyle(fontSize: 13, color: Colors.grey[100]),
+                            textStyle: TextStyle(
+                                fontSize: 13, color: Colors.grey[100]),
                           ),
                         ),
                       ),
@@ -86,8 +85,8 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
                           child: Text(
                             "${widget.label.toString().split("|")[5]} - ${widget.label.toString().split("|")[4]}",
                             style: GoogleFonts.raleway(
-                              textStyle:
-                              TextStyle(fontSize: 13, color: Colors.grey[100]),
+                              textStyle: TextStyle(
+                                  fontSize: 13, color: Colors.grey[100]),
                             ),
                           ),
                         ),
@@ -95,13 +94,13 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                   Text(
-                      widget.label.toString().split("|")[1],
-                      style: GoogleFonts.raleway(
-                        textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
-                      ),
+                  Text(
+                    widget.label.toString().split("|")[1],
+                    style: GoogleFonts.raleway(
+                      textStyle:
+                          TextStyle(fontSize: 15, color: Colors.grey[100]),
                     ),
-
+                  ),
                 ],
               ),
             ),
@@ -114,7 +113,9 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                widget.label.toString().split("|")[2] == 1 ? "COMPLETED" : "REMINDER",
+                widget.label.toString().split("|")[2] == 1
+                    ? "COMPLETED"
+                    : "REMINDER",
                 style: GoogleFonts.raleway(
                   textStyle: const TextStyle(
                       fontSize: 10,

@@ -4,22 +4,23 @@ import '../../models/tv_show.dart';
 
 class TvShowTile extends StatelessWidget {
   final TvShow? tvShow;
+
   TvShowTile(this.tvShow);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(bottom: 12),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-            image: DecorationImage(image: NetworkImage(tvShow?.image??""),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.9), BlendMode.dstATop)),
+          image: DecorationImage(
+              image: NetworkImage(tvShow?.image ?? ""),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.9), BlendMode.dstATop)),
           borderRadius: BorderRadius.circular(16),
           // color: Colors.green
         ),
@@ -29,7 +30,7 @@ class TvShowTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  tvShow?.title??"",
+                  tvShow?.title ?? "",
                   style: GoogleFonts.raleway(
                     textStyle: const TextStyle(
                         fontSize: 16,
@@ -50,10 +51,10 @@ class TvShowTile extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      tvShow?.channel??"",
+                      tvShow?.channel ?? "",
                       style: GoogleFonts.raleway(
                         textStyle:
-                        TextStyle(fontSize: 13, color: Colors.grey[100]),
+                            TextStyle(fontSize: 13, color: Colors.grey[100]),
                       ),
                     ),
                   ],
@@ -62,7 +63,7 @@ class TvShowTile extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  tvShow?.season??"",
+                  tvShow?.season ?? "",
                   style: GoogleFonts.raleway(
                     textStyle: const TextStyle(
                         fontSize: 16,
@@ -72,7 +73,7 @@ class TvShowTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  tvShow?.description??"",
+                  tvShow?.description ?? "",
                   style: GoogleFonts.raleway(
                     textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
                   ),
@@ -89,7 +90,7 @@ class TvShowTile extends StatelessWidget {
           RotatedBox(
             quarterTurns: 3,
             child: Text(
-              tvShow!.isOngoing== 1 ? "COMPLETED" : "ONGOING",
+              tvShow!.isOngoing == 1 ? "COMPLETED" : "ONGOING",
               style: GoogleFonts.raleway(
                 textStyle: const TextStyle(
                     fontSize: 10,

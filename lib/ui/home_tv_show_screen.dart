@@ -13,6 +13,7 @@ import 'comment_screen.dart';
 
 class HomeTvShowScreen extends StatefulWidget {
   final Channel channel;
+
   const HomeTvShowScreen({Key? key, required this.channel}) : super(key: key);
 
   @override
@@ -34,20 +35,22 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
     return Scaffold(
       appBar: _appBar(context),
       body: Column(
-        children:[
-          const SizedBox(height: 10,),
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
           _showTvShows()
         ],
       ),
     );
   }
 
-  _showTvShows(){
+  _showTvShows() {
     return Expanded(
-      child: Obx((){
+      child: Obx(() {
         return ListView.builder(
             itemCount: _tvShowController.selectedTvShowList.length,
-            itemBuilder: (_, index){
+            itemBuilder: (_, index) {
               TvShow tvShow = _tvShowController.selectedTvShowList[index];
               print(_tvShowController.selectedTvShowList);
               print(tvShow.toJson());
@@ -58,7 +61,7 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
                       child: Row(
                         children: [
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               _showBottomOptions(context, tvShow);
                             },
                             child: TvShowTile(tvShow),
@@ -72,119 +75,118 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
     );
   }
 
-  _showBottomOptions(BuildContext context, TvShow tvShow){
-    Get.bottomSheet(
-        Container(
-          padding: const EdgeInsets.only(top: 4),
-          height: tvShow.isOngoing==0? MediaQuery.of(context).size.height*0.90:
-          MediaQuery.of(context).size.height*0.90,
-          color: Get.isDarkMode?blackColor:Colors.white,
-          child: Column(
-            children: [
-              Container(
-                height: 6,
-                width: 100,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
-                ),
-              ),
-              const Spacer(),
-              const SizedBox(
-                height: 6,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "Add Comment",
-                  onTap: (){
-                    Get.to(()=>AddCommentScreen(tvShow: tvShow,));
-                  },
-                  color: Colors.indigo,
-                  context:context
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "View Comments",
-                  onTap: (){
-                    Get.to(()=>CommentScreen(tvShow: tvShow,));
-                  },
-                  color: Colors.green,
-                  context:context
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "Set Reminder",
-                  onTap: (){
-                    Get.to(()=>AddReminderScreen(tvShow: tvShow));
-                  },
-                  color: greyColor,
-                  context:context
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "View Reminder",
-                  onTap: (){
-                    Get.to(()=>const ReminderScreen());
-                  },
-                  color: Colors.indigo,
-                  context:context
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "Close",
-                  onTap: (){
-                    Get.back();
-                  },
-                  color: Colors.white,
-                  isClosed: true,
-                  context:context
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-
-            ],
+  _showBottomOptions(BuildContext context, TvShow tvShow) {
+    Get.bottomSheet(Container(
+      padding: const EdgeInsets.only(top: 4),
+      height: tvShow.isOngoing == 0
+          ? MediaQuery.of(context).size.height * 0.90
+          : MediaQuery.of(context).size.height * 0.90,
+      color: Get.isDarkMode ? blackColor : Colors.white,
+      child: Column(
+        children: [
+          Container(
+            height: 6,
+            width: 100,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
           ),
-        )
-    );
+          const Spacer(),
+          const SizedBox(
+            height: 6,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "Add Comment",
+              onTap: () {
+                Get.to(() => AddCommentScreen(
+                      tvShow: tvShow,
+                    ));
+              },
+              color: Colors.indigo,
+              context: context),
+          const SizedBox(
+            height: 8,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "View Comments",
+              onTap: () {
+                Get.to(() => CommentScreen(
+                      tvShow: tvShow,
+                    ));
+              },
+              color: Colors.green,
+              context: context),
+          const SizedBox(
+            height: 8,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "Set Reminder",
+              onTap: () {
+                Get.to(() => AddReminderScreen(tvShow: tvShow));
+              },
+              color: greyColor,
+              context: context),
+          const SizedBox(
+            height: 8,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "View Reminder",
+              onTap: () {
+                Get.to(() => const ReminderScreen());
+              },
+              color: Colors.indigo,
+              context: context),
+          const SizedBox(
+            height: 8,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "Close",
+              onTap: () {
+                Get.back();
+              },
+              color: Colors.white,
+              isClosed: true,
+              context: context),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    ));
   }
 
-  _bottomOptionsButton({
-    required String buttonLabel,
-    required Function()? onTap,
-    required Color color,
-    bool isClosed=false,
-    required BuildContext context
-
-  }){
-
+  _bottomOptionsButton(
+      {required String buttonLabel,
+      required Function()? onTap,
+      required Color color,
+      bool isClosed = false,
+      required BuildContext context}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         height: 55,
-        width:MediaQuery.of(context).size.width*0.9,
+        width: MediaQuery.of(context).size.width * 0.9,
         decoration: BoxDecoration(
-          border: Border.all(width: 2,
-              color: isClosed==true? Get.isDarkMode?Colors.grey[600]!: Colors.grey[300]!:color),
+          border: Border.all(
+              width: 2,
+              color: isClosed == true
+                  ? Get.isDarkMode
+                      ? Colors.grey[600]!
+                      : Colors.grey[300]!
+                  : color),
           borderRadius: BorderRadius.circular(20),
-          color: isClosed==true? Colors.transparent:color,
+          color: isClosed == true ? Colors.transparent : color,
         ),
         child: Center(
           child: Text(
             buttonLabel,
-            style: isClosed?inputLabelStyles:inputLabelStyles.copyWith(color: Colors.white),
+            style: isClosed
+                ? inputLabelStyles
+                : inputLabelStyles.copyWith(color: Colors.white),
           ),
         ),
       ),
-
     );
   }
 
@@ -193,22 +195,20 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
-        onTap:(){
+        onTap: () {
           Get.back();
         },
         child: Icon(Icons.arrow_back_ios_new_outlined,
-            size: 20,
-            color: Get.isDarkMode? Colors.white : Colors.black),
+            size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions: const [
         CircleAvatar(
-          backgroundImage: AssetImage(
-              "images/profile.jpg"
-          ),
+          backgroundImage: AssetImage("images/profile.jpg"),
         ),
-        SizedBox(width: 20,)
+        SizedBox(
+          width: 20,
+        )
       ],
     );
   }
 }
-

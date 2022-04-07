@@ -4,19 +4,20 @@ import '../../models/user_management.dart';
 
 class UserManagementTile extends StatelessWidget {
   final UserManagement? userManagement;
+
   UserManagementTile(this.userManagement);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(bottom: 12),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage(userManagement?.image??""),
+          image: DecorationImage(
+              image: NetworkImage(userManagement?.image ?? ""),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.9), BlendMode.dstATop)),
@@ -29,7 +30,7 @@ class UserManagementTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  userManagement?.text??"",
+                  userManagement?.text ?? "",
                   style: GoogleFonts.raleway(
                     textStyle: const TextStyle(
                         fontSize: 16,

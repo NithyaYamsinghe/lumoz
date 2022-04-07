@@ -30,22 +30,24 @@ class _ChannelScreenState extends State<ChannelScreen> {
     return Scaffold(
       appBar: _appBar(context),
       body: Column(
-        children:[
+        children: [
           _addChannelBar(),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           _showChannels()
         ],
       ),
     );
   }
 
-  _showChannels(){
+  _showChannels() {
     return Expanded(
-      child: Obx((){
+      child: Obx(() {
         return ListView.builder(
             itemCount: _channelController.channelList.length,
-            itemBuilder: (_, index){
-              Channel channel= _channelController.channelList[index];
+            itemBuilder: (_, index) {
+              Channel channel = _channelController.channelList[index];
               print(channel.toJson());
               return AnimationConfiguration.staggeredList(
                   position: index,
@@ -54,7 +56,7 @@ class _ChannelScreenState extends State<ChannelScreen> {
                       child: Row(
                         children: [
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               _showBottomOptions(context, channel);
                             },
                             child: ChannelTile(channel),
@@ -68,98 +70,96 @@ class _ChannelScreenState extends State<ChannelScreen> {
     );
   }
 
-  _showBottomOptions(BuildContext context, Channel channel){
-    Get.bottomSheet(
-        Container(
-          padding: const EdgeInsets.only(top: 4),
-          height: MediaQuery.of(context).size.height*0.45,
-          color: Get.isDarkMode?blackColor:Colors.white,
-          child: Column(
-            children: [
-              Container(
-                height: 6,
-                width: 120,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
-                ),
-              ),
-              const Spacer(),
-              _bottomOptionsButton(
-                  buttonLabel: "Delete Channel",
-                  onTap: (){
-                    _channelController.deleteChannel(channel);
-                    Get.back();
-                  },
-                  color: Colors.red[300]!,
-                  context:context
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "Update Channel",
-                  onTap: (){
-                    Get.to(()=>UpdateChannelScreen(channel: channel,));
-                  },
-                  color: Colors.green,
-                  context:context
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              _bottomOptionsButton(
-                  buttonLabel: "Close",
-                  onTap: (){
-                    Get.back();
-                  },
-                  color: Colors.white,
-                  isClosed: true,
-                  context:context
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-
-            ],
+  _showBottomOptions(BuildContext context, Channel channel) {
+    Get.bottomSheet(Container(
+      padding: const EdgeInsets.only(top: 4),
+      height: MediaQuery.of(context).size.height * 0.45,
+      color: Get.isDarkMode ? blackColor : Colors.white,
+      child: Column(
+        children: [
+          Container(
+            height: 6,
+            width: 120,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
           ),
-        )
-    );
+          const Spacer(),
+          _bottomOptionsButton(
+              buttonLabel: "Delete Channel",
+              onTap: () {
+                _channelController.deleteChannel(channel);
+                Get.back();
+              },
+              color: Colors.red[300]!,
+              context: context),
+          const SizedBox(
+            height: 10,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "Update Channel",
+              onTap: () {
+                Get.to(() => UpdateChannelScreen(
+                      channel: channel,
+                    ));
+              },
+              color: Colors.green,
+              context: context),
+          const SizedBox(
+            height: 10,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "Close",
+              onTap: () {
+                Get.back();
+              },
+              color: Colors.white,
+              isClosed: true,
+              context: context),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    ));
   }
 
-  _bottomOptionsButton({
-    required String buttonLabel,
-    required Function()? onTap,
-    required Color color,
-    bool isClosed=false,
-    required BuildContext context
-
-  }){
-
+  _bottomOptionsButton(
+      {required String buttonLabel,
+      required Function()? onTap,
+      required Color color,
+      bool isClosed = false,
+      required BuildContext context}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         height: 55,
-        width:MediaQuery.of(context).size.width*0.9,
+        width: MediaQuery.of(context).size.width * 0.9,
         decoration: BoxDecoration(
-          border: Border.all(width: 2,
-              color: isClosed==true? Get.isDarkMode?Colors.grey[600]!: Colors.grey[300]!:color),
+          border: Border.all(
+              width: 2,
+              color: isClosed == true
+                  ? Get.isDarkMode
+                      ? Colors.grey[600]!
+                      : Colors.grey[300]!
+                  : color),
           borderRadius: BorderRadius.circular(20),
-          color: isClosed==true? Colors.transparent:color,
+          color: isClosed == true ? Colors.transparent : color,
         ),
         child: Center(
           child: Text(
             buttonLabel,
-            style: isClosed?inputLabelStyles:inputLabelStyles.copyWith(color: Colors.white),
+            style: isClosed
+                ? inputLabelStyles
+                : inputLabelStyles.copyWith(color: Colors.white),
           ),
         ),
       ),
-
     );
   }
 
-  _addChannelBar(){
+  _addChannelBar() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -169,14 +169,19 @@ class _ChannelScreenState extends State<ChannelScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Lumoz", style: headingStyles,)
+                Text(
+                  "Lumoz",
+                  style: headingStyles,
+                )
               ],
             ),
           ),
-          MainButton(label: "Add New Channel", onTap: () async {
-            await Get.to(() => const AddChannelScreen());
-            _channelController.getChannels();
-          })
+          MainButton(
+              label: "Add New Channel",
+              onTap: () async {
+                await Get.to(() => const AddChannelScreen());
+                _channelController.getChannels();
+              })
         ],
       ),
     );
@@ -187,22 +192,20 @@ class _ChannelScreenState extends State<ChannelScreen> {
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
-        onTap:(){
+        onTap: () {
           Get.back();
         },
         child: Icon(Icons.arrow_back_ios_new_outlined,
-            size: 20,
-            color: Get.isDarkMode? Colors.white : Colors.black),
+            size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions: const [
         CircleAvatar(
-          backgroundImage: AssetImage(
-              "images/profile.jpg"
-          ),
+          backgroundImage: AssetImage("images/profile.jpg"),
         ),
-        SizedBox(width: 20,)
+        SizedBox(
+          width: 20,
+        )
       ],
     );
   }
 }
-
