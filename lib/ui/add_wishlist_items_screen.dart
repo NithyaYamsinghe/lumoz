@@ -71,8 +71,8 @@ class AddWishlistItemsScreenState extends State< AddWishlistItemsScreen> {
                       controller: textEditingControllerTvChanel,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Tv Chanel',
-                        labelText: 'Tv Chanel',
+                        hintText: 'Tv Channel',
+                        labelText: 'Tv Channel',
                       ),
                     ),
                     const SizedBox(
@@ -156,7 +156,7 @@ class AddWishlistItemsScreenState extends State< AddWishlistItemsScreen> {
                                 color: Colors.white
                             ), // Your icon here
                             label: const Text(
-                              "Cancle",
+                              "Cancel",
                               style: TextStyle(color: Colors.white),
                             ),
                             style: ButtonStyle(

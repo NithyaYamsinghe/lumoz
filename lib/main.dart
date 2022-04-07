@@ -18,8 +18,10 @@ import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/tv_show_screen.dart';
 import 'package:lumoz/ui/user_management_screen.dart';
 import 'package:lumoz/ui/user_screen.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
+   tz.initializeTimeZones();
   WidgetsFlutterBinding.ensureInitialized(); // ensure initialize
   await DatabaseHelper.initDatabase();
   await GetStorage.init();

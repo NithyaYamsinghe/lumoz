@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
 import '../models/reminder.dart';
 import '../ui/view_reminder_screen.dart';
 

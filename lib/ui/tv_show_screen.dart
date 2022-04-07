@@ -22,6 +22,7 @@ class _TvShowScreenState extends State<TvShowScreen> {
 
   @override
   void initState() {
+    WidgetsFlutterBinding.ensureInitialized();
     super.initState();
     _tvShowController.getTvShows();
   }
