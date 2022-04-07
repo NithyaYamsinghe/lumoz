@@ -7,6 +7,7 @@ import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class AddTvShowScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class AddTvShowScreen extends StatefulWidget {
 }
 
 class _AddTvShowScreenState extends State<AddTvShowScreen> {
+
   final TvShowController _tvShowController = Get.put(TvShowController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -26,13 +28,15 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
 
   @override
   void initState() {
-    super.initState();
+    tz.initializeTimeZones();
     WidgetsFlutterBinding.ensureInitialized();
+    super.initState();
   }
 
-   DateTime _selectedDate = tz.TZDateTime.now(tz.local);
-   String _endTime = "10.30 PM";
-   String _startTime = DateFormat("hh:mm a").format(tz.TZDateTime.now(tz.local)).toString();
+  DateTime _selectedDate = tz.TZDateTime.now(tz.local);
+  String _endTime = "10.30 PM";
+  String _startTime = DateFormat("hh:mm a").format(tz.TZDateTime.now(tz.local)).toString();
+
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +146,7 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
     }}
 
   _saveFormDataToDB () async {
-    int response =  await  _tvShowController.addTvShow(
+     await  _tvShowController.addTvShow(
         tvShow: TvShow(
             channel: _channelController.text,
             title:_titleController.text,

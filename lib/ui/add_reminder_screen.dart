@@ -205,7 +205,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     }}
 
   _saveFormDataToDB () async {
-  int response =  await  _reminderController.addReminder(
+    await  _reminderController.addReminder(
       reminder: Reminder(
           note:_noteController.text,
           tvShow : _tvShowNameController.text,
@@ -218,7 +218,6 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
           isCompleted:0
       )
     );
-  print("id" + "$response");
   }
   _colorPalette(){
     return ( Column(

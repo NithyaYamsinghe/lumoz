@@ -30,7 +30,7 @@ class _AddAdminUserScreenState extends State<AddAdminUserScreen> {
         child: SingleChildScrollView(
             child: Column(
                 children:[
-                  Text("Sign Up",
+                  Text("Administrator Sign Up",
                     style: headingStyles,),
                   FormInput(
                     inputLabel: "User Name",

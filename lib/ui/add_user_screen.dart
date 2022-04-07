@@ -29,7 +29,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
         child: SingleChildScrollView(
             child: Column(
                 children:[
-                  Text("Sign Up",
+                  Text("User Sign Up",
                     style: headingStyles,),
                   FormInput(
                     inputLabel: "User Name",

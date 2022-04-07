@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
+import 'package:lumoz/controllers/wishlist_controller.dart';
 import 'package:lumoz/ui/home_user_management_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/controllers/user_controller.dart';
+
+import '../models/wishlist.dart';
 
 class LoginUserScreen extends StatefulWidget {
   const LoginUserScreen({Key? key}) : super(key: key);
@@ -13,6 +16,7 @@ class LoginUserScreen extends StatefulWidget {
 }
 
 class _LoginUserScreenState extends State<LoginUserScreen> {
+  final WishlistController _wishlistController =  Get.put(WishlistController());
   final UserController _userController = Get.put(UserController());
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController  _passwordTextController = TextEditingController();
@@ -54,7 +58,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
     );
   }
 
-  _validateFormData(){
+  _validateFormData()  {
     if( _emailTextController.text.isNotEmpty && _passwordTextController.text.isNotEmpty){
       _userController.getUser(_emailTextController.text);
       if(_userController.selectedUserList.isNotEmpty){
@@ -68,6 +72,9 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
           backgroundColor: Colors.white,
           icon: const Icon(Icons.warning_amber_rounded));
     }}
+
+
+
 
     _appBar(BuildContext context) {
     return AppBar(
