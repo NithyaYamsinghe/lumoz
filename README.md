@@ -1,3 +1,4 @@
+![plot](./images/lumoz.logo.1.png)
 # lumoz
 
 This project is developed as an group assignment for the current trends in software engineering - SE4010 module.
