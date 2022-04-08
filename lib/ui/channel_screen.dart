@@ -5,6 +5,7 @@ import 'package:lumoz/ui/add_channel_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/update_channel_screen.dart';
+import 'package:lumoz/ui/view_channel_screen.dart';
 import 'package:lumoz/ui/widgets/channel_tile.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import '../models/channel.dart';
@@ -74,7 +75,7 @@ class _ChannelScreenState extends State<ChannelScreen> {
   _showBottomOptions(BuildContext context, Channel channel) {
     Get.bottomSheet(Container(
       padding: const EdgeInsets.only(top: 4),
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.of(context).size.height * 0.50,
       color: Get.isDarkMode ? blackColor : Colors.white,
       child: Column(
         children: [
@@ -86,6 +87,18 @@ class _ChannelScreenState extends State<ChannelScreen> {
                 color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
           ),
           const Spacer(),
+          _bottomOptionsButton(
+              buttonLabel: "View Channel",
+              onTap: () {
+                Get.to(() => ViewChannelScreen(
+                  channel: channel,
+                ));
+              },
+              color: Colors.indigo,
+              context: context),
+          const SizedBox(
+            height: 10,
+          ),
           _bottomOptionsButton(
               buttonLabel: "Delete Channel",
               onTap: () {

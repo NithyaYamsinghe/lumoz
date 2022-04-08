@@ -8,6 +8,7 @@ import 'package:lumoz/models/reminder.dart';
 import 'package:lumoz/services/notification_service.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/update_reminder_screen.dart';
 import 'package:lumoz/ui/view_reminder_screen.dart';
 import 'package:lumoz/ui/widgets/reminder_tile.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -187,6 +188,16 @@ class _ReminderScreenState extends State<ReminderScreen> {
             height: 10,
           ),
           _bottomOptionsButton(
+              buttonLabel: "Update Reminder",
+              onTap: () {
+                Get.to(() => UpdateReminderScreen(reminder: reminder));
+              },
+              color: Colors.indigo,
+              context: context),
+          const SizedBox(
+            height: 10,
+          ),
+          _bottomOptionsButton(
               buttonLabel: "Close",
               onTap: () {
                 Get.back();
@@ -289,10 +300,6 @@ class _ReminderScreenState extends State<ReminderScreen> {
               ],
             ),
           ),
-          // MainButton(label: "Add Reminder", onTap: () async {
-          //  await Get.to(() => AddReminderScreen(tvShow: ""));
-          //   _reminderController.getReminders();
-          // })
         ],
       ),
     );

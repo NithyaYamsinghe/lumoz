@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:lumoz/ui/home_management_screen.dart';
+import 'package:lumoz/ui/home_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:flutter/material.dart';
@@ -80,13 +82,30 @@ class _UpdateHomeScreenState extends State<UpdateHomeScreen> {
         _imageController.text.isNotEmpty &&
         _linkController.text.isNotEmpty) {
       _saveFormDataToDB();
-      Get.back();
-    } else if (_textController.text.isEmpty ||
-        _imageController.text.isEmpty ||
+    } else if (_textController.text.isEmpty &&
+        _imageController.text.isEmpty &&
         _linkController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }else if (_textController.text.isEmpty ) {
+      Get.snackbar("Required", "Text required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }else if (
+    _imageController.text.isEmpty ) {
+      Get.snackbar("Required", "Image required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (
+    _linkController.text.isEmpty ) {
+      Get.snackbar("Required", "Link required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
@@ -97,6 +116,11 @@ class _UpdateHomeScreenState extends State<UpdateHomeScreen> {
         text: _textController.text,
         image: _imageController.text,
         link: _linkController.text));
+    Get.snackbar("Success", "Updated Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
+    Get.to(() => const HomeScreen());
   }
 
   _appBar(BuildContext context) {

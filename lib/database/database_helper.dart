@@ -120,6 +120,11 @@ class DatabaseHelper {
              ''', [1, id]);
   }
 
+  static updateReminderRecord(Reminder reminder) async {
+    await _database?.update(_tableName, reminder.toJson(),
+        where: "id = ?", whereArgs: [reminder.id]);
+  }
+
   static Future<int> createTvShow(TvShow? tvShow) async {
     print("create tv show function called");
     return await _database?.insert(_tableNameTvShow, tvShow!.toJson()) ?? 1;
@@ -191,9 +196,9 @@ class DatabaseHelper {
     return await _database?.insert(_tableNameUser, user!.toJson()) ?? 1;
   }
 
-  static Future<List<Map<String, dynamic>>> queryUser(String email) async {
+  static Future<List<Map<String, dynamic>>> queryUser(String email, String password) async {
     return await _database!
-        .query(_tableNameUser, where: 'email = ?', whereArgs: [email]);
+        .query(_tableNameUser, where: 'email = ? and password = ?', whereArgs: [email, password]);
   }
 
   static Future<List<Map<String, dynamic>>> queryUsers() async {
@@ -209,13 +214,21 @@ class DatabaseHelper {
     return await _database!.rawUpdate('''
              UPDATE users
              SET password = ?
-             WHERE id =?
+             WHERE id = ?
              ''', [password, id]);
   }
 
   static updateUserRecord(User user) async {
     await _database?.update(_tableNameUser, user.toJson(),
         where: "email = ?", whereArgs: [user.email]);
+  }
+
+  static updateUserPassword(String email ,String password) async {
+    return await _database!.rawUpdate('''
+             UPDATE users
+             SET password = ?
+             WHERE email = ?
+             ''', [password, email]);
   }
 
   static Future<int> createChannel(Channel? channel) async {

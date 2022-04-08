@@ -64,13 +64,38 @@ class _LoginAdminUserScreenState extends State<LoginAdminUserScreen> {
   _validateFormData() {
     if (_emailTextController.text.isNotEmpty &&
         _passwordTextController.text.isNotEmpty) {
-      Get.to(() => const HomeAdminManagementScreen());
-      if (_userController.selectedUserList.isNotEmpty) {}
+      _userController.getUser(_emailTextController.text, _passwordTextController.text);
+      if (_userController.selectedUserList.isNotEmpty) {
+        Get.snackbar("Success", "Sign In Successfully!",
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.done));
+        Get.to(() => const HomeAdminManagementScreen());
+      }
+      else if(_userController.selectedUserList.isEmpty){
+        Get.snackbar("Error", "Email or Password Incorrect!",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.redAccent,
+            icon: const Icon(Icons.warning_amber_rounded));
+      }
     } else if (_emailTextController.text.isEmpty &&
         _passwordTextController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (
+    _passwordTextController.text.isEmpty) {
+      Get.snackbar("Required", "Password required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_emailTextController.text.isEmpty ) {
+      Get.snackbar("Required", "Email required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }

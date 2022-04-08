@@ -1,5 +1,6 @@
 import 'package:lumoz/ui/login_user_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
+import 'package:lumoz/ui/user_screen.dart';
 import '../models/user.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/ui/theme.dart';
@@ -8,20 +9,20 @@ import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/controllers/user_controller.dart';
 
-class AddUserScreen extends StatefulWidget {
-  const AddUserScreen({Key? key}) : super(key: key);
+class AddNewUserScreen extends StatefulWidget {
+  const AddNewUserScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddUserScreen> createState() => _AddUserScreenState();
+  State<AddNewUserScreen> createState() => _AddNewUserScreenState();
 }
 
-class _AddUserScreenState extends State<AddUserScreen> {
+class _AddNewUserScreenState extends State<AddNewUserScreen> {
   final UserController _userController = Get.put(UserController());
   final TextEditingController _userNameTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
-      TextEditingController();
+  TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,53 +30,49 @@ class _AddUserScreenState extends State<AddUserScreen> {
       appBar: _appBar(context),
       body: Container(
         padding:
-            const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 30),
+        const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 30),
         child: SingleChildScrollView(
             child: Column(children: [
-          Text(
-            "User Sign Up",
-            style: headingStyles,
-          ),
-          FormInput(
-            inputLabel: "User Name",
-            inputHint: "user name",
-            controller: _userNameTextController,
-          ),
-          FormInput(
-            inputLabel: "Email",
-            inputHint: "email",
-            controller: _emailTextController,
-          ),
-          FormInput(
-            inputLabel: "Password",
-            inputHint: "password",
-            controller: _passwordTextController,
-          ),
-          FormInput(
-            inputLabel: "Confirm Password",
-            inputHint: "confirm password",
-            controller: _confirmPasswordTextController,
-          ),
-          const SizedBox(
-            height: 18,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              MainButton(
-                  label: "Create New Account",
-                  onTap: () {
-                    _validateFormData();
-                  }),
-              MainButton(
-                  label: "Sign In",
-                  onTap: () {
-                    Get.to(() => const LoginUserScreen());
-                  }),
-            ],
-          )
-        ])),
+              Text(
+                "Add New User",
+                style: headingStyles,
+              ),
+              FormInput(
+                inputLabel: "User Name",
+                inputHint: "user name",
+                controller: _userNameTextController,
+              ),
+              FormInput(
+                inputLabel: "Email",
+                inputHint: "email",
+                controller: _emailTextController,
+              ),
+              FormInput(
+                inputLabel: "Password",
+                inputHint: "password",
+                controller: _passwordTextController,
+              ),
+              FormInput(
+                inputLabel: "Confirm Password",
+                inputHint: "confirm password",
+                controller: _confirmPasswordTextController,
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MainButton(
+                      label: "Add New User",
+                      onTap: () {
+                        _validateFormData();
+                      }),
+
+                ],
+              )
+            ])),
       ),
     );
   }
@@ -129,19 +126,19 @@ class _AddUserScreenState extends State<AddUserScreen> {
   _saveFormDataToDB() async {
     await _userController.addUser(
         user: User(
-      userName: _userNameTextController.text,
-      firstName: "",
-      lastName: "",
-      mobile: "",
-      age: "",
-      email: _emailTextController.text,
-      password: _passwordTextController.text,
-    ));
-    Get.snackbar("Success", "Sign Up Successfully!",
+          userName: _userNameTextController.text,
+          firstName: "",
+          lastName: "",
+          mobile: "",
+          age: "",
+          email: _emailTextController.text,
+          password: _passwordTextController.text,
+        ));
+    Get.snackbar("Success", "Added Successfully!",
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         icon: const Icon(Icons.done));
-    Get.to(() => const LoginUserScreen());
+    Get.to(() => const UserScreen());
   }
 
 

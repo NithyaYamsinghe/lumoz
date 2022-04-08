@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/controllers/channel_controller.dart';
 import 'package:lumoz/models/channel.dart';
+import 'package:lumoz/ui/channel_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
@@ -78,13 +79,30 @@ class _UpdateChannelScreenState extends State<UpdateChannelScreen> {
         _descriptionController.text.isNotEmpty &&
         _imageController.text.isNotEmpty) {
       _saveFormDataToDB();
-      Get.back();
-    } else if (_channelNameController.text.isEmpty ||
-        _descriptionController.text.isEmpty ||
+    } else if (_channelNameController.text.isEmpty &&
+        _descriptionController.text.isEmpty &&
         _imageController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_channelNameController.text.isEmpty) {
+      Get.snackbar("Required", "Channel Name required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_descriptionController.text.isEmpty) {
+      Get.snackbar("Required", "Description required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_imageController.text.isEmpty) {
+      Get.snackbar("Required", "Image required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
@@ -95,6 +113,11 @@ class _UpdateChannelScreenState extends State<UpdateChannelScreen> {
         channel: _channelNameController.text,
         image: _imageController.text,
         description: _descriptionController.text));
+    Get.snackbar("Success", "Updated Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
+    Get.to(() => const ChannelScreen());
   }
 
   _appBar(BuildContext context) {

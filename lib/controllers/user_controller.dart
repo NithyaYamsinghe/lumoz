@@ -24,11 +24,12 @@ class UserController extends GetxController {
   }
 
   // get specific user from database
-  void getUser(String email) async {
-    List<Map<String, dynamic>>? users = await DatabaseHelper.queryUser(email);
+  void getUser(String email, String password) async {
+    List<Map<String, dynamic>>? users = await DatabaseHelper.queryUser(email, password);
     selectedUserList
         .assignAll(users.map((data) => new User.fromJson(data)).toList());
-    print(selectedUserList);
+    print(selectedUserList[0].email);
+    print(selectedUserList[0].password);
   }
 
   // delete a user from database
@@ -46,6 +47,10 @@ class UserController extends GetxController {
 
   void updateUserRecord(User user) async {
     await DatabaseHelper.updateUserRecord(user);
-    getUser(user.email!);
+    getUser(user.email!, user.password!);
+  }
+
+  void updateUserPassword(String email, String password) async {
+    await DatabaseHelper.updateUserPassword(email, password);
   }
 }

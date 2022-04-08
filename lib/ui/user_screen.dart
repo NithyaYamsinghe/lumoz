@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/controllers/user_controller.dart';
+import 'package:lumoz/ui/add_new_user_screen.dart';
 import 'package:lumoz/ui/add_user_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
@@ -186,7 +187,7 @@ class _UserScreenState extends State<UserScreen> {
           MainButton(
               label: "Add New User",
               onTap: () async {
-                await Get.to(() => AddUserScreen());
+                await Get.to(() => AddNewUserScreen());
                 _userController.getUsers();
               })
         ],

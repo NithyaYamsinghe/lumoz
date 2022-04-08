@@ -196,7 +196,17 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
         _noteController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: Icon(Icons.warning_amber_rounded));
+    } else if (_tvShowNameController.text.isEmpty) {
+      Get.snackbar("Required", "Tv show name required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: Icon(Icons.warning_amber_rounded));
+    } else if (_noteController.text.isEmpty) {
+      Get.snackbar("Required", "Note required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: Icon(Icons.warning_amber_rounded));
     }
   }
@@ -213,7 +223,12 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             repeat: _selectedRepeat,
             color: _selectedColor,
             isCompleted: 0));
+    Get.snackbar("Success", "Added Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
   }
+
 
   _colorPalette() {
     return (Column(
@@ -313,9 +328,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions: [
-        const CircleAvatar(
-            backgroundImage: AssetImage("images/profile.jpg")
-        ),
+        const CircleAvatar(backgroundImage: AssetImage("images/profile.jpg")),
         const SizedBox(
           width: 20,
         ),

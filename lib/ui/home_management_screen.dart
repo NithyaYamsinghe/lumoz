@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/ui/create_user_profile_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
+import 'package:lumoz/ui/update_user_profile_screen.dart';
+import 'package:lumoz/ui/view_user_profile_screen.dart';
 import 'package:lumoz/ui/widgets/home_tile.dart';
 import '../controllers/home_controller.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -11,8 +13,9 @@ import '../services/theme_service.dart';
 
 class HomeManagementScreen extends StatefulWidget {
   final String? email;
+  final String? password;
 
-  const HomeManagementScreen({Key? key, this.email}) : super(key: key);
+  const HomeManagementScreen({Key? key, this.email, this.password}) : super(key: key);
 
   @override
   State<HomeManagementScreen> createState() => _HomeManagementScreenState();
@@ -60,9 +63,13 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
                             onTap: () {
                               if (home.text == 'Create User Profile') {
                                 Get.to(() => CreateUserProfileScreen(
-                                    email: widget.email));
+                                    email: widget.email, password:widget.password));
                               } else if (home.text == "View User Profile") {
-                                // Get.to(()=>HomeUserManagementScreen());
+                                Get.to(() => ViewUserProfileScreen(
+                                    email: widget.email, password:widget.password));
+                              }else if (home.text == "Update User Profile") {
+                                Get.to(() => UpdateUserProfileScreen(
+                                    email: widget.email, password:widget.password));
                               }
                             },
                             child: HomeTile(home),

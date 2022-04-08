@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lumoz/ui/home_channel_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:flutter/material.dart';
@@ -60,13 +61,13 @@ class _UpdateCommentScreenState extends State<UpdateCommentScreen> {
   _validateFormData() {
     if (_commentTextController.text.isNotEmpty) {
       _saveFormDataToDB();
-      Get.back();
     } else if (_commentTextController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
+    Get.to(() => const HomeChannelScreen());
   }
 
   _saveFormDataToDB() {
@@ -74,6 +75,11 @@ class _UpdateCommentScreenState extends State<UpdateCommentScreen> {
         id: widget.comment.id,
         comment: _commentTextController.text,
         tvShowId: widget.comment.tvShowId));
+    Get.snackbar("Success", "Updated Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
+    Get.back();
   }
 
   _appBar(BuildContext context) {

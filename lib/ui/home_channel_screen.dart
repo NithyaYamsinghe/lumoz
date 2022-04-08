@@ -4,6 +4,7 @@ import 'package:lumoz/controllers/channel_controller.dart';
 import 'package:lumoz/ui/home_tv_show_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/view_channel_screen.dart';
 import 'package:lumoz/ui/widgets/channel_tile.dart';
 import '../models/channel.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -72,7 +73,7 @@ class _HomeChannelScreenState extends State<HomeChannelScreen> {
   _showBottomOptions(BuildContext context, Channel channel) {
     Get.bottomSheet(Container(
       padding: const EdgeInsets.only(top: 4),
-      height: MediaQuery.of(context).size.height * 0.30,
+      height: MediaQuery.of(context).size.height * 0.40,
       color: Get.isDarkMode ? blackColor : Colors.white,
       child: Column(
         children: [
@@ -84,6 +85,18 @@ class _HomeChannelScreenState extends State<HomeChannelScreen> {
                 color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
           ),
           const Spacer(),
+          _bottomOptionsButton(
+              buttonLabel: "View Channel",
+              onTap: () {
+                Get.to(() => ViewChannelScreen(
+                  channel: channel,
+                ));
+              },
+              color: Colors.indigo,
+              context: context),
+          const SizedBox(
+            height: 10,
+          ),
           _bottomOptionsButton(
               buttonLabel: "View Tv Shows",
               onTap: () {

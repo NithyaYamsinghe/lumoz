@@ -89,8 +89,27 @@ class _HomeScreenState extends State<HomeScreen> {
           _bottomOptionsButton(
               buttonLabel: "Delete Tab Information",
               onTap: () {
-                _homeController.deleteHome(home);
-                Get.back();
+                showDialog(context: context, builder:(BuildContext context){
+                  return AlertDialog(
+                    title: Text("Confirm"),
+                    content: Text("Are you sure?"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Ok"),
+                        onPressed: () {
+                          _homeController.deleteHome(home);
+                          Get.back();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: (){
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  );
+                });
               },
               color: Colors.red[300]!,
               context: context),

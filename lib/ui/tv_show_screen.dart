@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lumoz/controllers/tvshow_controller.dart';
-import 'package:lumoz/ui/add_comment_screen.dart';
+import 'package:lumoz/controllers/tv_show_controller.dart';
 import 'package:lumoz/ui/add_tv_show_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/update_tv_show_screen.dart';
+import 'package:lumoz/ui/view_tv_show_screen.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/ui/widgets/tv_show_tile.dart';
 import '../models/tv_show.dart';
@@ -78,7 +78,7 @@ class _TvShowScreenState extends State<TvShowScreen> {
       padding: const EdgeInsets.only(top: 4),
       height: tvShow.isOngoing == 0
           ? MediaQuery.of(context).size.height * 1.0
-          : MediaQuery.of(context).size.height * 0.90,
+          : MediaQuery.of(context).size.height * 0.50,
       color: Get.isDarkMode ? blackColor : Colors.white,
       child: Column(
         children: [
@@ -100,6 +100,18 @@ class _TvShowScreenState extends State<TvShowScreen> {
                   },
                   color: primaryClr,
                   context: context),
+          const SizedBox(
+            height: 6,
+          ),
+          _bottomOptionsButton(
+              buttonLabel: "View Tv Show",
+              onTap: () {
+                Get.to(() => ViewTvShowScreen(
+                  tvShow: tvShow,
+                ));
+              },
+              color: Colors.green,
+              context: context),
           _bottomOptionsButton(
               buttonLabel: "Delete TvShow",
               onTap: () {
@@ -138,18 +150,6 @@ class _TvShowScreenState extends State<TvShowScreen> {
                     ));
               },
               color: greyColor,
-              context: context),
-          const SizedBox(
-            height: 10,
-          ),
-          _bottomOptionsButton(
-              buttonLabel: "Add Comment",
-              onTap: () {
-                Get.to(() => AddCommentScreen(
-                      tvShow: tvShow,
-                    ));
-              },
-              color: Colors.green,
               context: context),
           const SizedBox(
             height: 10,

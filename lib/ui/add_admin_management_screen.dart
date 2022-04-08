@@ -77,22 +77,45 @@ class _AddAdminManagementScreenState extends State<AddAdminManagementScreen> {
         _linkController.text.isNotEmpty) {
       _saveFormDataToDB();
       Get.back();
-    } else if (_textController.text.isEmpty ||
-        _imageController.text.isEmpty ||
+    } else if (_textController.text.isEmpty &&
+        _imageController.text.isEmpty &&
         _linkController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_textController.text.isEmpty ) {
+      Get.snackbar("Required", "Text required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }else if (
+        _imageController.text.isEmpty ) {
+      Get.snackbar("Required", "Image required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (
+    _linkController.text.isEmpty ) {
+      Get.snackbar("Required", "Link required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
 
   _saveFormDataToDB() async {
-    int response = await _adminManagementController.addAdminManagement(
+    await _adminManagementController.addAdminManagement(
         adminManagement: AdminManagement(
             text: _textController.text,
             image: _imageController.text,
             link: _linkController.text));
+    Get.snackbar("Success", "Added Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
   }
 
   _appBar(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lumoz/controllers/tvshow_controller.dart';
+import 'package:lumoz/controllers/tv_show_controller.dart';
 import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
@@ -141,14 +141,42 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
 
   _validateFormData() {
     if (_titleController.text.isNotEmpty &&
-        _descriptionController.text.isNotEmpty) {
+        _descriptionController.text.isNotEmpty &&
+        _channelController.text.isNotEmpty &&
+        _imageController.text.isNotEmpty &&
+        _seasonController.text.isNotEmpty) {
       _saveFormDataToDB();
       Get.back();
     } else if (_titleController.text.isEmpty &&
         _descriptionController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_titleController.text.isEmpty) {
+      Get.snackbar("Required", "Title required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_descriptionController.text.isEmpty) {
+      Get.snackbar("Required", "description required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_channelController.text.isEmpty) {
+      Get.snackbar("Required", "Channel required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_imageController.text.isEmpty) {
+      Get.snackbar("Required", "Image required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_seasonController.text.isEmpty) {
+      Get.snackbar("Required", "Season required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
@@ -166,6 +194,10 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
       startTime: _startTime,
       endTime: _endTime,
     ));
+    Get.snackbar("Success", "Added Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
   }
 
   _appBar(BuildContext context) {
@@ -180,9 +212,7 @@ class _AddTvShowScreenState extends State<AddTvShowScreen> {
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions: [
-        const CircleAvatar(
-            backgroundImage: AssetImage("images/profile.jpg")
-        ),
+        const CircleAvatar(backgroundImage: AssetImage("images/profile.jpg")),
         const SizedBox(
           width: 20,
         ),

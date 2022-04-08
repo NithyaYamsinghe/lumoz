@@ -69,22 +69,44 @@ class _AddChannelScreenState extends State<AddChannelScreen> {
         _imageController.text.isNotEmpty) {
       _saveFormDataToDB();
       Get.back();
-    } else if (_channelNameController.text.isEmpty ||
-        _descriptionController.text.isEmpty ||
+    } else if (_channelNameController.text.isEmpty &&
+        _descriptionController.text.isEmpty &&
         _imageController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_channelNameController.text.isEmpty) {
+      Get.snackbar("Required", "Channel Name required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_descriptionController.text.isEmpty) {
+      Get.snackbar("Required", "Description required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_imageController.text.isEmpty) {
+      Get.snackbar("Required", "Image required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
 
   _saveFormDataToDB() async {
-    int response = await _channelController.addChannel(
+    await _channelController.addChannel(
         channel: Channel(
             channel: _channelNameController.text,
             image: _imageController.text,
             description: _descriptionController.text));
+    Get.snackbar("Success", "Added Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
   }
 
   _appBar(BuildContext context) {

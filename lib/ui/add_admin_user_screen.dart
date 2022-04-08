@@ -86,15 +86,43 @@ class _AddAdminUserScreenState extends State<AddAdminUserScreen> {
         _emailTextController.text.isNotEmpty &&
         _passwordTextController.text.isNotEmpty &&
         _confirmPasswordTextController.text.isNotEmpty) {
-      _saveFormDataToDB();
-      Get.back();
-    } else if (_userNameTextController.text.isEmpty ||
-        _emailTextController.text.isEmpty ||
-        _passwordTextController.text.isEmpty ||
+      if (_passwordTextController.text == _confirmPasswordTextController.text) {
+        _saveFormDataToDB();
+        Get.back();
+      } else if (_passwordTextController.text !=
+          _confirmPasswordTextController.text) {
+        Get.snackbar("Required", "Passwords are not match!",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.redAccent,
+            icon: const Icon(Icons.warning_amber_rounded));
+      }
+    } else if (_userNameTextController.text.isEmpty &&
+        _emailTextController.text.isEmpty &&
+        _passwordTextController.text.isEmpty &&
         _confirmPasswordTextController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_userNameTextController.text.isEmpty) {
+      Get.snackbar("Required", "Username required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_emailTextController.text.isEmpty) {
+      Get.snackbar("Required", "Email required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_passwordTextController.text.isEmpty) {
+      Get.snackbar("Required", "Password required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    } else if (_confirmPasswordTextController.text.isEmpty) {
+      Get.snackbar("Required", "Confirm Password required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
@@ -110,6 +138,10 @@ class _AddAdminUserScreenState extends State<AddAdminUserScreen> {
       email: _emailTextController.text,
       password: _passwordTextController.text,
     ));
+    Get.snackbar("Success", "Sign Up Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
     Get.to(() => const LoginAdminUserScreen());
   }
 

@@ -10,8 +10,9 @@ import 'package:lumoz/controllers/user_controller.dart';
 
 class CreateUserProfileScreen extends StatefulWidget {
   final String? email;
+  final String? password;
 
-  const CreateUserProfileScreen({Key? key, this.email}) : super(key: key);
+  const CreateUserProfileScreen({Key? key, this.email, this.password}) : super(key: key);
 
   @override
   State<CreateUserProfileScreen> createState() =>
@@ -21,7 +22,7 @@ class CreateUserProfileScreen extends StatefulWidget {
 class _CreateUserProfileScreenState extends State<CreateUserProfileScreen> {
   final UserController _userController = Get.put(UserController());
   TextEditingController _userNameTextController = TextEditingController();
-   TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
   TextEditingController _mobileController = TextEditingController();
@@ -29,17 +30,21 @@ class _CreateUserProfileScreenState extends State<CreateUserProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _userController.getUser(widget.email!);
+    _userController.getUser(widget.email!, widget.password!);
   }
 
   @override
   Widget build(BuildContext context) {
     _userNameTextController = TextEditingController(
         text: _userController.selectedUserList[0].userName);
-     _firstNameController = TextEditingController(  text: _userController.selectedUserList[0].firstName);
-   _lastNameController = TextEditingController(  text: _userController.selectedUserList[0].lastName);
-    _ageController = TextEditingController(  text: _userController.selectedUserList[0].age.toString());
-   _mobileController = TextEditingController(  text: _userController.selectedUserList[0].mobile);
+    _firstNameController = TextEditingController(
+        text: _userController.selectedUserList[0].firstName);
+    _lastNameController = TextEditingController(
+        text: _userController.selectedUserList[0].lastName);
+    _ageController = TextEditingController(
+        text: _userController.selectedUserList[0].age.toString());
+    _mobileController =
+        TextEditingController(text: _userController.selectedUserList[0].mobile);
     return Scaffold(
       appBar: _appBar(context),
       body: Container(
@@ -48,7 +53,7 @@ class _CreateUserProfileScreenState extends State<CreateUserProfileScreen> {
         child: SingleChildScrollView(
             child: Column(children: [
           Text(
-            "Create Profile",
+            "Create User Profile",
             style: headingStyles,
           ),
           FormInput(
@@ -97,7 +102,8 @@ class _CreateUserProfileScreenState extends State<CreateUserProfileScreen> {
 
   _validateFormData() {
     if (_userNameTextController.text.isNotEmpty &&
-        _firstNameController.text.isNotEmpty) {
+        _firstNameController.text.isNotEmpty && _firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty &&
+    _mobileController.text.isNotEmpty && _ageController.text.isNotEmpty) {
       _saveFormDataToDB();
     } else if (_userNameTextController.text.isEmpty ||
         _firstNameController.text.isEmpty) {
@@ -117,7 +123,7 @@ class _CreateUserProfileScreenState extends State<CreateUserProfileScreen> {
       mobile: _mobileController.text,
       age: _ageController.text,
       email: widget.email,
-      password: _userController.selectedUserList[0].password,
+      password: widget.password,
     ));
     Get.to(() => const HomeManagementScreen());
   }
@@ -134,9 +140,7 @@ class _CreateUserProfileScreenState extends State<CreateUserProfileScreen> {
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions: [
-        const CircleAvatar(
-            backgroundImage: AssetImage("images/profile.jpg")
-        ),
+        const CircleAvatar(backgroundImage: AssetImage("images/profile.jpg")),
         const SizedBox(
           width: 20,
         ),

@@ -34,4 +34,11 @@ class ReminderController extends GetxController {
     await DatabaseHelper.updateReminder(id);
     getReminders();
   }
+
+
+  // update reminder record  on database
+  void updateReminderRecord(Reminder reminder) async {
+    await DatabaseHelper.updateReminderRecord(reminder);
+   getReminders();
+  }
 }

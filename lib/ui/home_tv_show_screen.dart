@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lumoz/controllers/tvshow_controller.dart';
+import 'package:lumoz/controllers/tv_show_controller.dart';
 import 'package:lumoz/models/channel.dart';
 import 'package:lumoz/ui/add_comment_screen.dart';
 import 'package:lumoz/ui/add_reminder_screen.dart';
-import 'package:lumoz/ui/reminder_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
-import 'package:lumoz/ui/widgets/main_button.dart';
+import 'package:lumoz/ui/view_tv_show_screen.dart';
 import 'package:lumoz/ui/widgets/tv_show_tile.dart';
 import '../models/tv_show.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -81,8 +80,8 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
     Get.bottomSheet(Container(
       padding: const EdgeInsets.only(top: 4),
       height: tvShow.isOngoing == 0
-          ? MediaQuery.of(context).size.height * 0.90
-          : MediaQuery.of(context).size.height * 0.90,
+          ? MediaQuery.of(context).size.height * 0.99
+          : MediaQuery.of(context).size.height * 0.99,
       color: Get.isDarkMode ? blackColor : Colors.white,
       child: Column(
         children: [
@@ -94,9 +93,6 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
                 color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
           ),
           const Spacer(),
-          const SizedBox(
-            height: 6,
-          ),
           _bottomOptionsButton(
               buttonLabel: "Add Comment",
               onTap: () {
@@ -107,7 +103,7 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
               color: Colors.indigo,
               context: context),
           const SizedBox(
-            height: 8,
+            height: 6,
           ),
           _bottomOptionsButton(
               buttonLabel: "View Comments",
@@ -119,7 +115,7 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
               color: Colors.green,
               context: context),
           const SizedBox(
-            height: 8,
+            height: 6,
           ),
           _bottomOptionsButton(
               buttonLabel: "Set Reminder",
@@ -129,17 +125,19 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
               color: greyColor,
               context: context),
           const SizedBox(
-            height: 8,
+            height: 6,
           ),
           _bottomOptionsButton(
-              buttonLabel: "View Reminder",
+              buttonLabel: "View Tv Show",
               onTap: () {
-                Get.to(() => const ReminderScreen());
+                Get.to(() => ViewTvShowScreen(
+                  tvShow: tvShow,
+                ));
               },
               color: Colors.indigo,
               context: context),
           const SizedBox(
-            height: 8,
+            height: 6,
           ),
           _bottomOptionsButton(
               buttonLabel: "Close",
@@ -150,7 +148,7 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
               isClosed: true,
               context: context),
           const SizedBox(
-            height: 20,
+            height: 4,
           ),
         ],
       ),

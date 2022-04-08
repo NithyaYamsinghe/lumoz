@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 
+import 'admin_management_screen.dart';
+
 class UpdateAdminManagementScreen extends StatefulWidget {
   final AdminManagement adminManagement;
 
@@ -84,13 +86,30 @@ class _UpdateAdminManagementScreenState
         _imageController.text.isNotEmpty &&
         _linkController.text.isNotEmpty) {
       _saveFormDataToDB();
-      Get.back();
-    } else if (_textController.text.isEmpty ||
-        _imageController.text.isEmpty ||
+    } else if (_textController.text.isEmpty &&
+        _imageController.text.isEmpty &&
         _linkController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }else if (_textController.text.isEmpty ) {
+      Get.snackbar("Required", "Text required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }else if (
+    _imageController.text.isEmpty ) {
+      Get.snackbar("Required", "Image required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (
+    _linkController.text.isEmpty ) {
+      Get.snackbar("Required", "Link required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
@@ -101,6 +120,11 @@ class _UpdateAdminManagementScreenState
         text: _textController.text,
         image: _imageController.text,
         link: _linkController.text));
+    Get.snackbar("Success", "Updated Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
+    Get.to(() => const AdminManagementScreen());
   }
 
   _appBar(BuildContext context) {

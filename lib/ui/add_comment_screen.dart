@@ -69,7 +69,7 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
     } else if (_commentTextController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
@@ -80,6 +80,10 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
       comment: _commentTextController.text,
       tvShowId: tvShow.id,
     ));
+    Get.snackbar("Success", "Added Successfully!",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.done));
   }
 
   _appBar(BuildContext context) {

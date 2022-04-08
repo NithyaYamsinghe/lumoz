@@ -15,8 +15,9 @@ import '../services/theme_service.dart';
 
 class HomeUserManagementScreen extends StatefulWidget {
   final String? email;
+  final String? password;
 
-  const HomeUserManagementScreen({Key? key, this.email}) : super(key: key);
+  const HomeUserManagementScreen({Key? key, this.email, this.password}) : super(key: key);
 
   @override
   State<HomeUserManagementScreen> createState() =>
@@ -78,7 +79,7 @@ class _HomeUserManagementScreenState extends State<HomeUserManagementScreen> {
                                   Get.to(() => ReminderScreen());
                                 } else if (userManagement.text == 'Profile') {
                                   Get.to(() => HomeManagementScreen(
-                                      email: widget.email!));
+                                      email: widget.email!, password:widget.password!));
                                 }
                               },
                               child: UserManagementTile(userManagement))

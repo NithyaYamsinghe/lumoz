@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:lumoz/controllers/wishlist_controller.dart';
 import 'package:lumoz/ui/home_user_management_screen.dart';
+import 'package:lumoz/ui/password_reset_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
@@ -17,7 +18,6 @@ class LoginUserScreen extends StatefulWidget {
 }
 
 class _LoginUserScreenState extends State<LoginUserScreen> {
-  final WishlistController _wishlistController = Get.put(WishlistController());
   final UserController _userController = Get.put(UserController());
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
@@ -60,7 +60,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
               MainButton(
                   label: "Forgot Password?",
                   onTap: () {
-                    // Get.to(() => const LoginUserScreen());
+                    Get.to(() => const PasswordResetScreen());
                   }),
             ],
           )
@@ -72,16 +72,40 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
   _validateFormData() {
     if (_emailTextController.text.isNotEmpty &&
         _passwordTextController.text.isNotEmpty) {
-      _userController.getUser(_emailTextController.text);
+      _userController.getUser(_emailTextController.text, _passwordTextController.text);
       if (_userController.selectedUserList.isNotEmpty) {
-        const email = "nithya@gmail.com";
-        Get.to(() => const HomeUserManagementScreen(email: email));
+      const email  = "nithya@gmail.com";
+      const password  = "abcg";
+      Get.snackbar("Success", "Sign In Successfully!",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          icon: const Icon(Icons.done));
+        Get.to(() => const HomeUserManagementScreen( email:email, password:password));
+      }
+      else if(_userController.selectedUserList.isEmpty){
+        Get.snackbar("Error", "Email or Password Incorrect!",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.redAccent,
+            icon: const Icon(Icons.warning_amber_rounded));
       }
     } else if (_emailTextController.text.isEmpty &&
         _passwordTextController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (
+        _passwordTextController.text.isEmpty) {
+      Get.snackbar("Required", "Password required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          icon: const Icon(Icons.warning_amber_rounded));
+    }
+    else if (_emailTextController.text.isEmpty ) {
+      Get.snackbar("Required", "Email required!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
           icon: const Icon(Icons.warning_amber_rounded));
     }
   }
