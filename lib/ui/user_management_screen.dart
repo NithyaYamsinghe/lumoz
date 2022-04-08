@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lumoz/controllers/user_management_controller.dart';
 import 'package:lumoz/models/user_management.dart';
 import 'package:lumoz/ui/add_user_management_screen.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/update_user_management_screen.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
@@ -90,8 +91,27 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
           _bottomOptionsButton(
               buttonLabel: "Delete Tab Information",
               onTap: () {
-                _userManagementController.deleteUserManagement(userManagement);
-                Get.back();
+                showDialog(context: context, builder:(BuildContext context){
+                  return AlertDialog(
+                    title: Text("Confirm"),
+                    content: Text("Are you sure?"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Ok"),
+                        onPressed: () {
+                          _userManagementController.deleteUserManagement(userManagement);
+                          Get.back();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: (){
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  );
+                });
               },
               color: Colors.red[300]!,
               context: context),
@@ -200,13 +220,20 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+      actions: [
+        const CircleAvatar(
+            backgroundImage: AssetImage("images/profile.jpg")
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
-        )
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }

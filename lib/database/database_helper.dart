@@ -28,7 +28,7 @@ class DatabaseHelper {
       return;
     }
     try {
-      String _path = await getDatabasesPath() + 'lumoz8.db';
+      String _path = await getDatabasesPath() + 'lumoz9.db';
       _database = await openDatabase(_path, version: _version,
           onCreate: (db, version) async {
         await db.execute(

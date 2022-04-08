@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/controllers/channel_controller.dart';
 import 'package:lumoz/ui/add_channel_screen.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/update_channel_screen.dart';
 import 'package:lumoz/ui/widgets/channel_tile.dart';
@@ -88,8 +89,27 @@ class _ChannelScreenState extends State<ChannelScreen> {
           _bottomOptionsButton(
               buttonLabel: "Delete Channel",
               onTap: () {
-                _channelController.deleteChannel(channel);
-                Get.back();
+                showDialog(context: context, builder:(BuildContext context){
+                  return AlertDialog(
+                    title: Text("Confirm"),
+                    content: Text("Are you sure?"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Ok"),
+                        onPressed: () {
+                          _channelController.deleteChannel(channel);
+                          Get.back();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: (){
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  );
+                });
               },
               color: Colors.red[300]!,
               context: context),
@@ -198,13 +218,20 @@ class _ChannelScreenState extends State<ChannelScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+      actions: [
+        const CircleAvatar(
+            backgroundImage: AssetImage("images/profile.jpg")
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
-        )
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }

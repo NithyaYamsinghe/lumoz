@@ -1,4 +1,5 @@
 import 'package:lumoz/ui/home_management_screen.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import '../models/user.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/ui/theme.dart';
@@ -132,13 +133,20 @@ class _CreateUserProfileScreenState extends State<CreateUserProfileScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+      actions: [
+        const CircleAvatar(
+            backgroundImage: AssetImage("images/profile.jpg")
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
-        )
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }

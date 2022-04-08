@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lumoz/models/reminder.dart';
 import 'package:lumoz/services/notification_service.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/view_reminder_screen.dart';
 import 'package:lumoz/ui/widgets/reminder_tile.dart';
@@ -36,12 +37,12 @@ class _ReminderScreenState extends State<ReminderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: Column(
         children: [
           _addReminderBar(),
           _addDateBar(),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           _showReminders()
@@ -139,8 +140,27 @@ class _ReminderScreenState extends State<ReminderScreen> {
           _bottomOptionsButton(
               buttonLabel: "Delete Reminder",
               onTap: () {
-                _reminderController.deleteReminder(reminder);
-                Get.back();
+                showDialog(context: context, builder:(BuildContext context){
+                  return AlertDialog(
+                    title: Text("Confirm"),
+                    content: Text("Are you sure?"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Ok"),
+                        onPressed: () {
+                          _reminderController.deleteReminder(reminder);
+                          Get.back();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: (){
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  );
+                });
               },
               color: Colors.red[300]!,
               context: context),
@@ -278,7 +298,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
     );
   }
 
-  _appBar() {
+  _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,
@@ -289,13 +309,20 @@ class _ReminderScreenState extends State<ReminderScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+      actions: [
+        const CircleAvatar(
+            backgroundImage: AssetImage("images/profile.jpg")
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
-        )
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }

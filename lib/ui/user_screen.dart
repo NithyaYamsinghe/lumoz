@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/controllers/user_controller.dart';
 import 'package:lumoz/ui/add_user_screen.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -87,8 +88,27 @@ class _UserScreenState extends State<UserScreen> {
           _bottomOptionsButton(
               buttonLabel: "Delete User",
               onTap: () {
-                _userController.deleteUser(user);
-                Get.back();
+                showDialog(context: context, builder:(BuildContext context){
+                  return AlertDialog(
+                    title: Text("Confirm"),
+                    content: Text("Are you sure?"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Ok"),
+                        onPressed: () {
+                          _userController.deleteUser(user);
+                          Get.back();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: (){
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  );
+                });
               },
               color: Colors.red[300]!,
               context: context),
@@ -185,13 +205,20 @@ class _UserScreenState extends State<UserScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+      actions: [
+        const CircleAvatar(
+            backgroundImage: AssetImage("images/profile.jpg")
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
-        )
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import '../services/theme_service.dart';
 import 'add_wishlist_items_screen.dart';
 import 'home_wishlist_screen.dart';
@@ -21,7 +22,7 @@ class WishlistScreen extends StatelessWidget {
       themeMode: ThemeService().theme,
       navigatorKey:navigatorKey,
       home: Scaffold(
-        appBar: _appBar(),
+        appBar: _appBar(context),
         body: const HomeWishlistScreen(),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
@@ -35,30 +36,31 @@ class WishlistScreen extends StatelessWidget {
     );
   }
 
-  _appBar() {
+  _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
-      // backgroundColor: context.theme.backgroundColor,
+      backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
-        onTap:(){
-          ThemeService().switchTheme();
-          notificationHelper.displayNotification(
-              title: "Theme Changed",
-              body: Get.isDarkMode? "Activated Lumoz Light Theme": "Activated Lumoz Dark Theme"
-          );
-          //notificationHelper.scheduledNotification();
+        onTap: () {
+          Get.back();
         },
-        child: Icon(Get.isDarkMode? Icons.wb_sunny: Icons.nightlight_round,
-            size: 20,
-            color: Get.isDarkMode? Colors.white : Colors.black),
+        child: Icon(Icons.arrow_back_ios_new_outlined,
+            size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage(
-              "images/profile.jpg"
-          ),
+      actions: [
+        const CircleAvatar(
+            backgroundImage: AssetImage("images/profile.jpg")
         ),
-        SizedBox(width: 20,)
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }

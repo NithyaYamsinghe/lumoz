@@ -21,7 +21,7 @@ import 'package:lumoz/ui/user_screen.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
-   tz.initializeTimeZones();
+  tz.initializeTimeZones();
   WidgetsFlutterBinding.ensureInitialized(); // ensure initialize
   await DatabaseHelper.initDatabase();
   await GetStorage.init();

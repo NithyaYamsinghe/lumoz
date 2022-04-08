@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lumoz/ui/create_user_profile_screen.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/widgets/home_tile.dart';
 import '../controllers/home_controller.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -19,14 +20,10 @@ class HomeManagementScreen extends StatefulWidget {
 
 class _HomeManagementScreenState extends State<HomeManagementScreen> {
   final HomeController _homeController = Get.put(HomeController());
-  var notificationHelper;
 
   @override
   void initState() {
     super.initState();
-    notificationHelper = NotificationHelper();
-    notificationHelper.initializeNotification();
-    notificationHelper.requestIOSPermissions();
     _homeController.getHomes();
   }
 
@@ -36,7 +33,7 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
       appBar: _appBar(context),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           _showChannels()
@@ -85,25 +82,27 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
-          ThemeService().switchTheme();
-          notificationHelper.displayNotification(
-              title: "Theme Changed",
-              body: Get.isDarkMode
-                  ? "Activated Lumoz Light Theme"
-                  : "Activated Lumoz Dark Theme");
-          //notificationHelper.scheduledNotification();
+          Get.back();
         },
-        child: Icon(Get.isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
+        child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+      actions: [
+        const CircleAvatar(
+            backgroundImage: AssetImage("images/profile.jpg")
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
-        )
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }
+
 }

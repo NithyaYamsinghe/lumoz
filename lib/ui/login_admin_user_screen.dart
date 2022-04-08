@@ -86,14 +86,6 @@ class _LoginAdminUserScreenState extends State<LoginAdminUserScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
-        ),
-        SizedBox(
-          width: 20,
-        )
-      ],
     );
   }
 }

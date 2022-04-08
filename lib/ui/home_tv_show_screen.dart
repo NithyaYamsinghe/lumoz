@@ -5,7 +5,9 @@ import 'package:lumoz/models/channel.dart';
 import 'package:lumoz/ui/add_comment_screen.dart';
 import 'package:lumoz/ui/add_reminder_screen.dart';
 import 'package:lumoz/ui/reminder_screen.dart';
+import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
+import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/ui/widgets/tv_show_tile.dart';
 import '../models/tv_show.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -201,13 +203,20 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: const [
-        CircleAvatar(
+      actions:  [
+        const CircleAvatar(
           backgroundImage: AssetImage("images/profile.jpg"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
-        )
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
       ],
     );
   }
