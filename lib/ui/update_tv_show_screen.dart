@@ -11,6 +11,8 @@ import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:timezone/timezone.dart' as tz;
 
+import 'home_admin_management_screen.dart';
+
 class UpdateTvShowScreen extends StatefulWidget {
   final TvShow tvShow;
 
@@ -219,9 +221,20 @@ class _UpdateTvShowScreenState extends State<UpdateTvShowScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(
-            backgroundImage: AssetImage("images/profile.jpg")
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeAdminManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
         const SizedBox(
           width: 20,
@@ -231,12 +244,11 @@ class _UpdateTvShowScreenState extends State<UpdateTvShowScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );
   }
-
   _getDate() async {
     DateTime? _pickerDate = await showDatePicker(
         context: context,

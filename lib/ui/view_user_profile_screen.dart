@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/controllers/user_controller.dart';
 
+import 'home_user_management_screen.dart';
+
 class ViewUserProfileScreen extends StatefulWidget {
   final String? email;
   final String? password;
@@ -110,8 +112,21 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(backgroundImage: AssetImage("images/profile.jpg")),
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
         const SizedBox(
           width: 20,
         ),
@@ -120,7 +135,7 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );

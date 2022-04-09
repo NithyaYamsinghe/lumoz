@@ -4,6 +4,8 @@ import 'package:lumoz/models/channel.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:get/get.dart';
 
+import 'home_user_management_screen.dart';
+
 class ViewChannelScreen extends StatefulWidget {
   final Channel channel;
 
@@ -82,6 +84,8 @@ class _ViewChannelScreenState extends State<ViewChannelScreen> {
                 ))));
   }
 
+
+
   _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
@@ -93,8 +97,21 @@ class _ViewChannelScreenState extends State<ViewChannelScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(backgroundImage: AssetImage("images/profile.jpg")),
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
         const SizedBox(
           width: 20,
         ),
@@ -103,7 +120,7 @@ class _ViewChannelScreenState extends State<ViewChannelScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );

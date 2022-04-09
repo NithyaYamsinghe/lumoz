@@ -121,8 +121,19 @@ class _HomeAdminManagementScreenState extends State<HomeAdminManagementScreen> {
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions: [
-        const CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeAdminManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
         const SizedBox(
           width: 20,

@@ -4,6 +4,8 @@ import 'package:lumoz/models/tv_show.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:get/get.dart';
 
+import 'home_user_management_screen.dart';
+
 class ViewTvShowScreen extends StatefulWidget {
   final TvShow tvShow;
 
@@ -142,6 +144,7 @@ class _ViewTvShowScreenState extends State<ViewTvShowScreen> {
             ))));
   }
 
+
   _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
@@ -153,8 +156,21 @@ class _ViewTvShowScreenState extends State<ViewTvShowScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(backgroundImage: AssetImage("images/profile.jpg")),
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
         const SizedBox(
           width: 20,
         ),
@@ -163,7 +179,7 @@ class _ViewTvShowScreenState extends State<ViewTvShowScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );

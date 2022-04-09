@@ -10,6 +10,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../models/home.dart';
 import '../services/notification_service.dart';
 import '../services/theme_service.dart';
+import 'home_user_management_screen.dart';
 
 class HomeManagementScreen extends StatefulWidget {
   final String? email;
@@ -83,6 +84,7 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
     );
   }
 
+
   _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
@@ -94,9 +96,20 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(
-            backgroundImage: AssetImage("images/profile.jpg")
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
         const SizedBox(
           width: 20,
@@ -106,7 +119,7 @@ class _HomeManagementScreenState extends State<HomeManagementScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );

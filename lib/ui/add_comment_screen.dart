@@ -8,6 +8,8 @@ import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/controllers/comment_controller.dart';
 
+import 'home_user_management_screen.dart';
+
 class AddCommentScreen extends StatefulWidget {
   final TvShow tvShow;
 
@@ -97,9 +99,20 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(
-            backgroundImage: AssetImage("images/profile.jpg")
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
         const SizedBox(
           width: 20,
@@ -109,7 +122,7 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );

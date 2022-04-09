@@ -11,6 +11,8 @@ import '../models/tv_show.dart';
 import 'package:lumoz/models/comment.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
+import 'home_user_management_screen.dart';
+
 class CommentScreen extends StatefulWidget {
   final TvShow tvShow;
 
@@ -220,9 +222,20 @@ class _CommentScreenState extends State<CommentScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(
-            backgroundImage: AssetImage("images/profile.jpg")
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
         const SizedBox(
           width: 20,
@@ -232,7 +245,7 @@ class _CommentScreenState extends State<CommentScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );

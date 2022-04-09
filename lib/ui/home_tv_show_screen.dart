@@ -4,6 +4,8 @@ import 'package:lumoz/controllers/tv_show_controller.dart';
 import 'package:lumoz/models/channel.dart';
 import 'package:lumoz/ui/add_comment_screen.dart';
 import 'package:lumoz/ui/add_reminder_screen.dart';
+import 'package:lumoz/ui/create_user_profile_screen.dart';
+import 'package:lumoz/ui/home_user_management_screen.dart';
 import 'package:lumoz/ui/splash_screen.dart';
 import 'package:lumoz/ui/theme.dart';
 import 'package:lumoz/ui/view_tv_show_screen.dart';
@@ -202,8 +204,19 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
       actions:  [
-        const CircleAvatar(
-          backgroundImage: AssetImage("images/profile.jpg"),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
         const SizedBox(
           width: 20,
@@ -213,7 +226,7 @@ class _HomeTvShowScreenState extends State<HomeTvShowScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );

@@ -9,6 +9,8 @@ import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:lumoz/controllers/user_controller.dart';
 
+import 'home_admin_management_screen.dart';
+
 class AddNewUserScreen extends StatefulWidget {
   const AddNewUserScreen({Key? key}) : super(key: key);
 
@@ -153,6 +155,32 @@ class _AddNewUserScreenState extends State<AddNewUserScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeAdminManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SplashScreen());
+          },
+          child: Icon(Icons.logout,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+      ],
     );
   }
 }

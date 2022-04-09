@@ -10,6 +10,7 @@ import 'package:lumoz/ui/widgets/form_input.dart';
 import 'package:lumoz/ui/widgets/main_button.dart';
 import 'package:timezone/timezone.dart' as tz;
 import '../models/reminder.dart';
+import 'home_user_management_screen.dart';
 
 class AddReminderScreen extends StatefulWidget {
   final TvShow tvShow;
@@ -327,8 +328,21 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
         child: Icon(Icons.arrow_back_ios_new_outlined,
             size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
       ),
-      actions: [
-        const CircleAvatar(backgroundImage: AssetImage("images/profile.jpg")),
+      actions:  [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const HomeUserManagementScreen());
+          },
+          child: Icon(Icons.home,
+              size: 30, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: Icon(Icons.account_box,
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
+        ),
         const SizedBox(
           width: 20,
         ),
@@ -337,7 +351,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             Get.to(() => const SplashScreen());
           },
           child: Icon(Icons.logout,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+              size: 25, color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ],
     );
